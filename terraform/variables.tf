@@ -1,5 +1,3 @@
-# variables.tf
-
 variable "aws_region" {
   description = "The AWS region things are created in"
   default     = "eu-west-1"
@@ -7,7 +5,7 @@ variable "aws_region" {
 
 variable "ecs_task_execution_role_name" {
   description = "ECS task execution role name"
-  default = "ecsTaskExecutionRole"
+  default = "airflowECS"
 }
 
 variable "az_count" {
@@ -15,28 +13,37 @@ variable "az_count" {
   default = "2"
 }
 
-
-variable "app_image" {
-  description = "Docker image to run in the ECS cluster"
-  default     = "puckel/docker-airflow"
+variable "airflow_image" {
+  description = "airflow image"
+  default     = "puckel/docker-airflow:1.10.4"
 }
 
-variable "app_port" {
+variable "jupyter_image" {
+  description = "jupyter image"
+  default     = "jupyter/datascience-notebook"
+}
+
+variable "airflow_port" {
   description = "Port exposed by the docker image to redirect traffic to"
   default     = 8080
 }
 
-variable "health_check_path" {
+variable "jupyter_port" {
+  default = 8888
+}
+
+variable "airflow_health_check_path" {
   default = "/health"
 }
 
-variable "fargate_cpu" {
-  description = "Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)"
-  default     = "1024"
+variable "jupyter_health_check_path" {
+  default = "/"
 }
 
-variable "fargate_memory" {
-  description = "Fargate instance memory to provision (in MiB)"
-  default     = "2048"
+variable "airflow_webserver_container_name" {
+  default = "airflow-webserver"
 }
 
+variable "jupyter_container_name" {
+  default = "jupyter"
+}
