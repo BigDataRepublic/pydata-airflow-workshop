@@ -62,11 +62,11 @@ resource "aws_ecs_service" "jupyter" {
   }
 
   load_balancer {
-    target_group_arn = aws_alb_target_group.airflow.id
+    target_group_arn = aws_alb_target_group.jupyter.id
     container_name   = var.jupyter_container_name
     container_port   = var.jupyter_port
   }
 
-  depends_on = [aws_alb_listener.airflow]
+  depends_on = [aws_alb_listener.jupyter]
 }
 

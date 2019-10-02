@@ -41,23 +41,24 @@ resource "aws_alb_target_group" "jupyter" {
   target_type = "ip"
 
   health_check {
-    healthy_threshold   = "3"
-    interval            = "30"
+    enabled = true
+    healthy_threshold   = "2"
+    interval            = "300"
     protocol            = "HTTP"
     matcher             = "200"
-    timeout             = "3"
-    path                = var.jupyter_health_check_path
-    unhealthy_threshold = "2"
+    timeout             = "60"
+    path                = "/login"
+    unhealthy_threshold = "10"
   }
 }
 
 resource "aws_alb_listener" "jupyter" {
   load_balancer_arn = aws_alb.main.id
-  port              = var.airflow_port
+  port              = var.jupyter_port
   protocol          = "HTTP"
 
   default_action {
-    target_group_arn = aws_alb_target_group.airflow.id
+    target_group_arn = aws_alb_target_group.jupyter.id
     type             = "forward"
   }
 }
