@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_group" "log_group" {
-  name              = "/ecs/cb-app"
+  name = "/ecs/pydata"
   retention_in_days = 30
 
   tags = {
@@ -8,6 +8,6 @@ resource "aws_cloudwatch_log_group" "log_group" {
 }
 
 resource "aws_cloudwatch_log_stream" "log_stream" {
-  name           = "pydata-log-stream"
+  name = "pydata-log-stream"
   log_group_name = aws_cloudwatch_log_group.log_group.name
 }

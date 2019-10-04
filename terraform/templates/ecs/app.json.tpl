@@ -21,21 +21,6 @@
     ]
   },
   {
-    "name": "airflow-scheduler",
-    "image": "${airflow_image}",
-    "cpu": 1024,
-    "memory": 2048,
-    "networkMode": "awsvpc",
-    "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "/ecs/cb-app",
-          "awslogs-region": "${aws_region}",
-          "awslogs-stream-prefix": "ecs/airflow-scheduler"
-        }
-    }
-  },
-  {
     "name": "${jupyter_container_name}",
     "image": "${jupyter_image}",
     "cpu": 2048,
