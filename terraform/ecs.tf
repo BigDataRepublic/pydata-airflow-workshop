@@ -1,9 +1,9 @@
 resource "aws_ecs_cluster" "main" {
-  name = "cb-cluster"
+  name = "pydata-cluster"
 }
 
-data "template_file" "cb_app" {
-  template = file("./templates/ecs/cb_app.json.tpl")
+data "template_file" "app" {
+  template = file("./templates/ecs/app.json.tpl")
 
   vars = {
     airflow_image      = var.airflow_image
@@ -17,13 +17,13 @@ data "template_file" "cb_app" {
 }
 
 resource "aws_ecs_task_definition" "app" {
-  family                   = "cb-app-task"
+  family                   = "pydata-app-task"
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "4096"
   memory                   = "8192"
-  container_definitions    = data.template_file.cb_app.rendered
+  container_definitions    = data.template_file.app.rendered
 }
 
 resource "aws_ecs_service" "airflow" {
@@ -34,7 +34,7 @@ resource "aws_ecs_service" "airflow" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    security_groups  = [aws_security_group.ecs_tasks.id]
+    security_groups  = [aws_security_group.airflow.id]
     subnets          = aws_subnet.private.*.id
     assign_public_ip = true
   }
@@ -56,7 +56,7 @@ resource "aws_ecs_service" "jupyter" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    security_groups  = [aws_security_group.ecs_tasks.id]
+    security_groups  = [aws_security_group.airflow.id]
     subnets          = aws_subnet.private.*.id
     assign_public_ip = true
   }

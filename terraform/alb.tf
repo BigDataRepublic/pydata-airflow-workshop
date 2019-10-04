@@ -1,7 +1,7 @@
 resource "aws_alb" "main" {
-  name            = "cb-load-balancer"
+  name            = "pydata-load-balancer"
   subnets         = aws_subnet.public.*.id
-  security_groups = [aws_security_group.lb.id]
+  security_groups = [aws_security_group.lb_airflow.id]
 }
 
 resource "aws_alb_target_group" "airflow" {
@@ -41,14 +41,13 @@ resource "aws_alb_target_group" "jupyter" {
   target_type = "ip"
 
   health_check {
-    enabled = true
-    healthy_threshold   = "2"
-    interval            = "300"
+    healthy_threshold   = "3"
+    interval            = "30"
     protocol            = "HTTP"
     matcher             = "200"
-    timeout             = "60"
-    path                = "/login"
-    unhealthy_threshold = "10"
+    timeout             = "3"
+    path                = var.jupyter_health_check_path
+    unhealthy_threshold = "2"
   }
 }
 
