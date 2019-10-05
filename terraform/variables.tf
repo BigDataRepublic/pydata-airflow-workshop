@@ -1,6 +1,6 @@
 variable "aws_region" {
   description = "The AWS region things are created in"
-  default     = "eu-west-1"
+  default = "eu-west-1"
 }
 
 variable "ecs_task_execution_role_name" {
@@ -15,17 +15,17 @@ variable "az_count" {
 
 variable "airflow_image" {
   description = "airflow image"
-  default     = "puckel/docker-airflow:1.10.4"
+  default = "puckel/docker-airflow:1.10.4"
 }
 
 variable "jupyter_image" {
   description = "jupyter image"
-  default     = "jupyter/datascience-notebook"
+  default = "jupyter/datascience-notebook"
 }
 
 variable "airflow_port" {
   description = "Port exposed by the docker image to redirect traffic to"
-  default     = 8080
+  default = 8080
 }
 
 variable "jupyter_port" {
