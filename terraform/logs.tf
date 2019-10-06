@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_group" "log_group" {
-  name = "/ecs/pydata"
+  name = var.log_group
   retention_in_days = 30
 
   tags = {

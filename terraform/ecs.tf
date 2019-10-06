@@ -13,6 +13,7 @@ data "template_file" "app" {
     jupyter_port = var.jupyter_port
     airflow_webserver_container_name = var.airflow_webserver_container_name
     jupyter_container_name = var.jupyter_container_name
+    log_group = var.log_group
   }
 }
 

@@ -8,7 +8,7 @@
     "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/cb-app",
+          "awslogs-group": "${log_group}",
           "awslogs-region": "${aws_region}",
           "awslogs-stream-prefix": "ecs/airflow-webserver"
         }
@@ -29,7 +29,7 @@
     "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/cb-app",
+          "awslogs-group": "${log_group}",
           "awslogs-region": "${aws_region}",
           "awslogs-stream-prefix": "ecs/jupyter"
         }

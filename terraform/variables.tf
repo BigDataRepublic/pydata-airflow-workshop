@@ -3,6 +3,10 @@ variable "aws_region" {
   default = "eu-west-1"
 }
 
+variable "log_group" {
+  default = "/ecs/pydata"
+}
+
 variable "ecs_task_execution_role_name" {
   description = "ECS task execution role name"
   default = "pydataECS"
@@ -20,7 +24,7 @@ variable "airflow_image" {
 
 variable "jupyter_image" {
   description = "jupyter image"
-  default = "jupyter/datascience-notebook"
+  default = "jupyter/scipy-notebook"
 }
 
 variable "airflow_port" {
@@ -37,7 +41,7 @@ variable "airflow_health_check_path" {
 }
 
 variable "jupyter_health_check_path" {
-  default = "/"
+  default = "/login"
 }
 
 variable "airflow_webserver_container_name" {

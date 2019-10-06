@@ -12,7 +12,7 @@ resource "aws_alb_target_group" "airflow" {
   target_type = "ip"
 
   health_check {
-    healthy_threshold = "3"
+    healthy_threshold = "1"
     interval = "30"
     protocol = "HTTP"
     matcher = "200"
@@ -41,7 +41,7 @@ resource "aws_alb_target_group" "jupyter" {
   target_type = "ip"
 
   health_check {
-    healthy_threshold = "3"
+    healthy_threshold = "1"
     interval = "30"
     protocol = "HTTP"
     matcher = "200"
