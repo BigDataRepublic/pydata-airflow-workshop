@@ -1,7 +1,3 @@
-resource "aws_ecs_cluster" "main" {
-  name = "pydata-cluster"
-}
-
 data "template_file" "app" {
   template = file("./templates/ecs/app.json.tpl")
 
