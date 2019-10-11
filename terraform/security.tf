@@ -1,5 +1,5 @@
 resource "aws_security_group" "lb" {
-  name = "pydata-load-balancer-airflow-security-group"
+  name = "pydata-load-balancer-airflow"
   description = "controls access to the ALB"
   vpc_id = aws_vpc.main.id
 
@@ -26,7 +26,7 @@ resource "aws_security_group" "lb" {
 }
 
 resource "aws_security_group" "ecs" {
-  name = "pydata-ecs-security-group"
+  name = "pydata-ecs-task"
   description = "allow inbound access from the ALB only"
   vpc_id = aws_vpc.main.id
 
@@ -43,6 +43,19 @@ resource "aws_security_group" "ecs" {
     to_port = var.jupyter_port
     security_groups = [aws_security_group.lb.id]
   }
+
+  egress {
+    protocol = "-1"
+    from_port = 0
+    to_port = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "container_instance" {
+  name = "pydata-container-instance"
+  description = "only allow egress"
+  vpc_id = aws_vpc.main.id
 
   egress {
     protocol = "-1"
