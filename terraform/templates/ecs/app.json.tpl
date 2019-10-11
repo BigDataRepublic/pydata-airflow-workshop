@@ -2,7 +2,7 @@
   {
     "name": "${airflow_webserver_container_name}",
     "image": "${airflow_image}",
-    "cpu": 1024,
+    "cpu": 512,
     "memory": 1024,
     "networkMode": "awsvpc",
     "logConfiguration": {
@@ -23,8 +23,8 @@
   {
     "name": "${jupyter_container_name}",
     "image": "${jupyter_image}",
-    "cpu": 2048,
-    "memory": 5632,
+    "cpu": 512,
+    "memory": 1024,
     "networkMode": "awsvpc",
     "logConfiguration": {
         "logDriver": "awslogs",

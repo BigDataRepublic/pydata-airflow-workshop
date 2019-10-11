@@ -26,7 +26,7 @@ data "template_file" "ec2_user_data" {
 # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_container_instance.html
 resource "aws_instance" "ecs" {
   ami = data.aws_ami.ecs.id
-  instance_type = "t2.micro"
+  instance_type = "t2.medium"
   subnet_id = aws_subnet.public.0.id
   associate_public_ip_address = true
   iam_instance_profile = aws_iam_instance_profile.container_instance.name
