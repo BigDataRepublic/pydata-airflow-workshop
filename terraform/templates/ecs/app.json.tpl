@@ -21,7 +21,28 @@
     ],
     "mountPoints": [
       {
-        "containerPath": "/usr/local/airflow",
+        "containerPath": "${airflow_home_folder}",
+        "sourceVolume": "${volume_name}"
+      }
+    ]
+  },
+  {
+    "name": "airflow-scheduler",
+    "image": "${airflow_image}",
+    "cpu": 512,
+    "memory": 2048,
+    "networkMode": "awsvpc",
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${log_group}",
+          "awslogs-region": "${aws_region}",
+          "awslogs-stream-prefix": "ecs/airflow-scheduler"
+        }
+    },
+    "mountPoints": [
+      {
+        "containerPath": "${airflow_home_folder}",
         "sourceVolume": "${volume_name}"
       }
     ]

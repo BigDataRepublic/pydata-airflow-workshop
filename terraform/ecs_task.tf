@@ -2,6 +2,10 @@ variable "volume_name" {
   default = "shared-storage"
 }
 
+variable "airflow_home_folder" {
+  default = "/usr/local/airflow"
+}
+
 data "template_file" "app" {
   template = file("./templates/ecs/app.json.tpl")
 
@@ -15,6 +19,7 @@ data "template_file" "app" {
     jupyter_container_name = var.jupyter_container_name
     log_group = var.log_group
     volume_name = var.volume_name
+    airflow_home_folder = var.airflow_home_folder
   }
 }
 
