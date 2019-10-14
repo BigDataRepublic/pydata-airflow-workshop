@@ -54,7 +54,7 @@ resource "aws_security_group" "ecs" {
 
 resource "aws_security_group" "container_instance" {
   name = "pydata-container-instance"
-  description = "only allow egress"
+  description = "only allow egress for EC2 instances"
   vpc_id = aws_vpc.main.id
 
   egress {
@@ -62,5 +62,18 @@ resource "aws_security_group" "container_instance" {
     from_port = 0
     to_port = 0
     cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "efs" {
+  name = "pydata-efs"
+  description = "limits EFS access to EC2 container instances only"
+  vpc_id = aws_vpc.main.id
+
+  ingress {
+    protocol = "tcp"
+    from_port = 2049
+    to_port = 2049
+    security_groups = [aws_security_group.container_instance.id]
   }
 }
