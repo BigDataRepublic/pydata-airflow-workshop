@@ -1,3 +1,7 @@
+variable "volume_name" {
+  default = "shared-storage"
+}
+
 data "template_file" "app" {
   template = file("./templates/ecs/app.json.tpl")
 
@@ -10,6 +14,7 @@ data "template_file" "app" {
     airflow_webserver_container_name = var.airflow_webserver_container_name
     jupyter_container_name = var.jupyter_container_name
     log_group = var.log_group
+    volume_name = var.volume_name
   }
 }
 
@@ -19,6 +24,11 @@ resource "aws_ecs_task_definition" "app" {
   network_mode = "awsvpc"
   requires_compatibilities = ["EC2"]
   container_definitions = data.template_file.app.rendered
+
+  volume {
+    name = var.volume_name
+    host_path = "/"
+  }
 }
 
 resource "aws_ecs_service" "airflow" {

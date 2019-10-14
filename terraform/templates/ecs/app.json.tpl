@@ -18,6 +18,12 @@
         "containerPort": ${airflow_port},
         "hostPort": ${airflow_port}
       }
+    ],
+    "mountPoints": [
+      {
+        "containerPath": "/usr/local/airflow",
+        "sourceVolume": "${volume_name}"
+      }
     ]
   },
   {
@@ -38,6 +44,12 @@
       {
         "containerPort": ${jupyter_port},
         "hostPort": ${jupyter_port}
+      }
+    ],
+    "mountPoints": [
+      {
+        "containerPath": "/home/jovyan",
+        "sourceVolume": "${volume_name}"
       }
     ]
   }
