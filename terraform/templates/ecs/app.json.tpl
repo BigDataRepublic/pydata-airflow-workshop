@@ -3,7 +3,7 @@
     "name": "${airflow_webserver_container_name}",
     "image": "${airflow_image}",
     "cpu": 512,
-    "memory": 1024,
+    "memory": 512,
     "networkMode": "awsvpc",
     "logConfiguration": {
         "logDriver": "awslogs",
@@ -32,6 +32,7 @@
     "cpu": 512,
     "memory": 2048,
     "networkMode": "awsvpc",
+    "command": ["scheduler"],
     "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
