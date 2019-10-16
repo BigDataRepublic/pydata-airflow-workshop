@@ -22,8 +22,14 @@
     "mountPoints": [
       {
         "containerPath": "${airflow_home_folder}",
-        "sourceVolume": "${volume_name}"
+        "sourceVolume": "${airflow_volume_name}"
       }
+    ],
+    "environment": [
+        {
+          "name": "AIRFLOW_HOME",
+          "value": "${airflow_home_folder}"
+        }
     ]
   },
   {
@@ -44,8 +50,22 @@
     "mountPoints": [
       {
         "containerPath": "${airflow_home_folder}",
-        "sourceVolume": "${volume_name}"
+        "sourceVolume": "${airflow_volume_name}"
       }
+    ],
+    "environment": [
+        {
+          "name": "AIRFLOW_HOME",
+          "value": "${airflow_home_folder}"
+        },
+        {
+          "name": "AIRFLOW__CORE__LOAD_EXAMPLES",
+          "value": "false"
+        },
+        {
+          "name": "AIRFLOW__SCHEDULER__DIR_LIST_INTERVAL",
+          "value": "30"
+        }
     ]
   },
   {
@@ -71,7 +91,7 @@
     "mountPoints": [
       {
         "containerPath": "/home/jovyan",
-        "sourceVolume": "${volume_name}"
+        "sourceVolume": "${dags_volume_name}"
       }
     ]
   }

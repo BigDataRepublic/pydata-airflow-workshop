@@ -1,5 +1,13 @@
-variable "volume_name" {
-  default = "shared-storage"
+variable "airflow_volume_name" {
+  default = "airflow"
+}
+
+variable "dags_volume_name" {
+  default = "dags"
+}
+
+variable "user_name" {
+  default = "axel"
 }
 
 variable "airflow_home_folder" {
@@ -18,8 +26,9 @@ data "template_file" "app" {
     airflow_webserver_container_name = var.airflow_webserver_container_name
     jupyter_container_name = var.jupyter_container_name
     log_group = var.log_group
-    volume_name = var.volume_name
+    airflow_volume_name = var.airflow_volume_name
     airflow_home_folder = var.airflow_home_folder
+    dags_volume_name = var.dags_volume_name
   }
 }
 
@@ -31,8 +40,13 @@ resource "aws_ecs_task_definition" "app" {
   container_definitions = data.template_file.app.rendered
 
   volume {
-    name = var.volume_name
-    host_path = "/"
+    name = var.airflow_volume_name
+    host_path = "/${var.user_name}"
+  }
+
+  volume {
+    name = var.dags_volume_name
+    host_path = "/${var.user_name}/dags"
   }
 }
 
