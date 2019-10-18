@@ -33,7 +33,7 @@ data "template_file" "app" {
 }
 
 resource "aws_ecs_task_definition" "app" {
-  family = "pydata-app"
+  family = "pydata"
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
   network_mode = "awsvpc"
   requires_compatibilities = ["EC2"]
@@ -41,12 +41,12 @@ resource "aws_ecs_task_definition" "app" {
 
   volume {
     name = var.airflow_volume_name
-    host_path = "/${var.user_name}"
+    host_path = "/efs/${var.user_name}"
   }
 
   volume {
     name = var.dags_volume_name
-    host_path = "/${var.user_name}/dags"
+    host_path = "/efs/${var.user_name}/dags"
   }
 }
 
@@ -61,11 +61,11 @@ resource "aws_ecs_service" "airflow" {
     subnets = aws_subnet.public.*.id
   }
 
-  load_balancer {
-    target_group_arn = aws_alb_target_group.airflow.id
-    container_name = var.airflow_webserver_container_name
-    container_port = var.airflow_port
-  }
+//  load_balancer {
+//    target_group_arn = aws_alb_target_group.airflow.id
+//    container_name = var.airflow_webserver_container_name
+//    container_port = var.airflow_port
+//  }
 
   load_balancer {
     target_group_arn = aws_alb_target_group.jupyter.id

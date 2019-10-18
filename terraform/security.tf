@@ -1,5 +1,5 @@
 resource "aws_security_group" "lb" {
-  name = "pydata-load-balancer-airflow"
+  name = "pydata-airflow"
   description = "controls access to the ALB"
   vpc_id = aws_vpc.main.id
 
@@ -63,13 +63,19 @@ resource "aws_security_group" "container_instance" {
     to_port = 0
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  ingress {
+    protocol = "tcp"
+    from_port = 22
+    to_port = 22
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_security_group" "efs" {
-  name = "pydata-efs"
+  name = "pydata"
   description = "limits EFS access to EC2 container instances only"
   vpc_id = aws_vpc.main.id
-
   ingress {
     protocol = "tcp"
     from_port = 2049
