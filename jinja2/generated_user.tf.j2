@@ -1,7 +1,7 @@
-module "axel" {
+module "{{user_name}}" {
   source = "./modules/user"
   
-  user_name = "axel"
+  user_name = "{{user_name}}"
   airflow_port = var.airflow_port
   jupyter_port = var.jupyter_port
   vpc_id = module.shared.vpc_id

@@ -55,7 +55,7 @@ resource "aws_ecs_task_definition" "app" {
 }
 
 resource "aws_ecs_service" "airflow" {
-  name = "pydata-airflow"
+  name = "pydata-airflow-${var.user_name}"
   cluster = var.ecs_cluster.id
   task_definition = aws_ecs_task_definition.app.arn
   desired_count = 1
