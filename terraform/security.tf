@@ -73,7 +73,7 @@ resource "aws_security_group" "container_instance" {
 }
 
 resource "aws_security_group" "efs" {
-  name = "pydata"
+  name = "pydata-efs"
   description = "limits EFS access to EC2 container instances only"
   vpc_id = aws_vpc.main.id
   ingress {

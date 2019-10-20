@@ -20,6 +20,7 @@ data "template_file" "ec2_user_data" {
   vars = {
     cluster_name = aws_ecs_cluster.main.name
     efs_id = aws_efs_file_system.shared_storage.id
+    user_name = var.user_name
   }
 }
 

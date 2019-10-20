@@ -51,3 +51,7 @@ variable "airflow_webserver_container_name" {
 variable "jupyter_container_name" {
   default = "jupyter"
 }
+
+variable "user_name" {
+  default = "axel"
+}

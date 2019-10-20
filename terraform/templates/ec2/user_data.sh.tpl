@@ -10,7 +10,6 @@ cloud-init-per once install_amazon-efs-utils yum install -y amazon-efs-utils
 
 # Create /efs folder
 cloud-init-per once mkdir_efs mkdir /efs
-cloud-init-per once change_rights_efs chmod 666 -R /efs
 
 # Mount /efs
 cloud-init-per once mount_efs echo -e '${efs_id}:/ /efs efs defaults,_netdev 0 0' >> /etc/fstab
@@ -22,5 +21,8 @@ Content-Type: text/x-shellscript; charset="us-ascii"
 #!/bin/bash
 # Set any ECS agent configuration options
 echo "ECS_CLUSTER=${cluster_name}" >> /etc/ecs/ecs.config
+
+mkdir -p /efs/${user_name}/dags
+chown -R 1000:1000 /efs
 
 --==BOUNDARY==--

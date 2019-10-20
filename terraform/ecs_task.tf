@@ -6,12 +6,8 @@ variable "dags_volume_name" {
   default = "dags"
 }
 
-variable "user_name" {
-  default = "axel"
-}
-
 variable "airflow_home_folder" {
-  default = "/usr/local/airflow"
+  default = "/usr/local/airflow/efs"
 }
 
 data "template_file" "app" {
@@ -61,11 +57,11 @@ resource "aws_ecs_service" "airflow" {
     subnets = aws_subnet.public.*.id
   }
 
-//  load_balancer {
-//    target_group_arn = aws_alb_target_group.airflow.id
-//    container_name = var.airflow_webserver_container_name
-//    container_port = var.airflow_port
-//  }
+  load_balancer {
+    target_group_arn = aws_alb_target_group.airflow.id
+    container_name = var.airflow_webserver_container_name
+    container_port = var.airflow_port
+  }
 
   load_balancer {
     target_group_arn = aws_alb_target_group.jupyter.id
