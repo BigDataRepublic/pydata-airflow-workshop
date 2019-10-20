@@ -10,18 +10,26 @@ variable "airflow_home_folder" {
   default = "/usr/local/airflow/efs"
 }
 
+variable "jupyter_container_name" {
+  default = "jupyter"
+}
+
+variable "airflow_webserver_container_name" {
+  default = "airflow-webserver"
+}
+
 data "template_file" "app" {
-  template = file("./templates/ecs/app.json.tpl")
+  template = file("./modules/user/templates/ecs/app.json.tpl")
 
   vars = {
-    airflow_image = var.airflow_image
+    airflow_image = "puckel/docker-airflow:1.10.4"
     airflow_port = var.airflow_port
     aws_region = var.aws_region
-    jupyter_image = var.jupyter_image
+    jupyter_image = "jupyter/scipy-notebook"
     jupyter_port = var.jupyter_port
-    airflow_webserver_container_name = var.airflow_webserver_container_name
-    jupyter_container_name = var.jupyter_container_name
-    log_group = var.log_group
+    airflow_webserver_container_name = "airflow-webserver"
+    jupyter_container_name = "jupyter"
+    log_group = var.log_group_name
     airflow_volume_name = var.airflow_volume_name
     airflow_home_folder = var.airflow_home_folder
     dags_volume_name = var.dags_volume_name
@@ -29,8 +37,8 @@ data "template_file" "app" {
 }
 
 resource "aws_ecs_task_definition" "app" {
-  family = "pydata"
-  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
+  family = "pydata-${var.user_name}"
+  execution_role_arn = var.ecs_task_execution_role_arn
   network_mode = "awsvpc"
   requires_compatibilities = ["EC2"]
   container_definitions = data.template_file.app.rendered
@@ -48,13 +56,13 @@ resource "aws_ecs_task_definition" "app" {
 
 resource "aws_ecs_service" "airflow" {
   name = "pydata-airflow"
-  cluster = aws_ecs_cluster.main.id
+  cluster = var.ecs_cluster.id
   task_definition = aws_ecs_task_definition.app.arn
   desired_count = 1
 
   network_configuration {
-    security_groups = [aws_security_group.ecs.id]
-    subnets = aws_subnet.public.*.id
+    security_groups = [var.ecs_security_group_id]
+    subnets = var.subnets.*.id
   }
 
   load_balancer {

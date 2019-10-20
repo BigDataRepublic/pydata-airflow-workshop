@@ -1,4 +1,4 @@
 output "alb_hostname" {
-  value = aws_alb.main.dns_name
+  value = module.axel.alb_hostname
 }
 
