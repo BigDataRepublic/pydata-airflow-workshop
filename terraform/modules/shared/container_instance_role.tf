@@ -1,4 +1,3 @@
-# https://docs.aws.amazon.com/AmazonECS/latest/developerguide/instance_IAM_role.html
 data "aws_iam_policy_document" "container_instance" {
   version = "2012-10-17"
   statement {

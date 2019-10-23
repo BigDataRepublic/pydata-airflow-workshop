@@ -1,14 +1,14 @@
 resource "aws_alb" "main" {
-  name = "pydata-load-balancer"
-  subnets = aws_subnet.public.*.id
-  security_groups = [aws_security_group.lb.id]
+  name = "pydata-${var.user_name}"
+  subnets = var.subnets.*.id
+  security_groups = [var.load_balancer_security_group_id]
 }
 
 resource "aws_alb_target_group" "airflow" {
-  name = "airflow-target-group"
+  name = "airflow-${var.user_name}"
   port = 80
   protocol = "HTTP"
-  vpc_id = aws_vpc.main.id
+  vpc_id = var.vpc_id
   target_type = "ip"
 
   health_check {
@@ -17,7 +17,7 @@ resource "aws_alb_target_group" "airflow" {
     protocol = "HTTP"
     matcher = "200"
     timeout = "3"
-    path = var.airflow_health_check_path
+    path = "/health"
     unhealthy_threshold = "2"
   }
 }
@@ -34,10 +34,10 @@ resource "aws_alb_listener" "airflow" {
 }
 
 resource "aws_alb_target_group" "jupyter" {
-  name = "jupyter-target-group"
+  name = "jupyter-${var.user_name}"
   port = 80
   protocol = "HTTP"
-  vpc_id = aws_vpc.main.id
+  vpc_id = var.vpc_id
   target_type = "ip"
 
   health_check {
@@ -46,7 +46,7 @@ resource "aws_alb_target_group" "jupyter" {
     protocol = "HTTP"
     matcher = "200"
     timeout = "3"
-    path = var.jupyter_health_check_path
+    path = "/login"
     unhealthy_threshold = "2"
   }
 }

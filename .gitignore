@@ -9,4 +9,10 @@
 *.tfvars
 
 .idea
+<<<<<<< HEAD
 *.ipynb
+=======
+
+terraform/generated_user.tf
+terraform/generated_outputs.tf
+>>>>>>> master
