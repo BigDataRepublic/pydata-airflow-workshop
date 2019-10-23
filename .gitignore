@@ -9,3 +9,6 @@
 *.tfvars
 
 .idea
+
+terraform/generated_user.tf
+terraform/generated_outputs.tf
