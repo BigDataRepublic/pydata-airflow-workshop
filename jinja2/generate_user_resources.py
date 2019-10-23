@@ -44,6 +44,4 @@ def render_template(user, template_file):
 
 if __name__ == '__main__':
     number_of_users = int(sys.argv[1])
-    print(number_of_users)
-
     generate_user_resources(number_of_users)
