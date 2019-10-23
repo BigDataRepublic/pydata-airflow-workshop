@@ -9,9 +9,7 @@
 *.tfvars
 
 .idea
-<<<<<<< HEAD
-*.ipynb
-=======
+.ipynb_checkpoints
 
 terraform/generated_user.tf
 terraform/generated_outputs.tf
