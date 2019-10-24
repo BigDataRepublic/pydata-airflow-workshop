@@ -3,21 +3,22 @@
 import jinja2
 import sys
 from xkcdpass import xkcd_password as xp
+import os
 
 TERRAFORM_FOLDER = '../terraform/'
 USER_FILE = 'generated_user.tf'
 OUTPUT_FILE = 'generated_outputs.tf'
 
 
-def generate_user_resources(number_of_users):
+def generate_user_resources(number_of_users, target_folder):
     users = generate_user_names(number_of_users)
 
     user_file_content = render_templates(users, USER_FILE + '.j2')
-    with open(TERRAFORM_FOLDER + USER_FILE, 'w') as f:
+    with open(f'{target_folder}/{USER_FILE}', 'w') as f:
         f.write(user_file_content)
 
     output_file_content = render_templates(users, OUTPUT_FILE + '.j2')
-    with open(TERRAFORM_FOLDER + OUTPUT_FILE, 'w') as f:
+    with open(f'{target_folder}/{OUTPUT_FILE}', 'w') as f:
         f.write(output_file_content)
 
 
@@ -34,7 +35,8 @@ def render_templates(users, template_file):
 
 
 def render_template(user, template_file):
-    template_loader = jinja2.FileSystemLoader(searchpath='./')
+    template_folder = os.path.dirname(os.path.realpath(__file__))
+    template_loader = jinja2.FileSystemLoader(searchpath=template_folder)
     template_environment = jinja2.Environment(loader=template_loader)
     template = template_environment.get_template(template_file)
     output_text = template.render(user_name=user)
@@ -43,5 +45,10 @@ def render_template(user, template_file):
 
 
 if __name__ == '__main__':
+
+    import os
+    print(os.path.realpath(__file__))
     number_of_users = int(sys.argv[1])
-    generate_user_resources(number_of_users)
+    target_folder = sys.argv[2]
+
+    generate_user_resources(number_of_users, target_folder)

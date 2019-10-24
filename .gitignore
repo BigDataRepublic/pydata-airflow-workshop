@@ -11,6 +11,4 @@
 .idea
 .ipynb_checkpoints
 
-terraform/generated_user.tf
-terraform/generated_outputs.tf
->>>>>>> master
+build/
