@@ -45,9 +45,6 @@ def render_template(user, template_file):
 
 
 if __name__ == '__main__':
-
-    import os
-    print(os.path.realpath(__file__))
     number_of_users = int(sys.argv[1])
     target_folder = sys.argv[2]
 
