@@ -1,19 +1,21 @@
 set -e
 
-mkdir -p build
+# build images
+AIRFLOW_IMAGE=bdrci/pydata-2019-airflow:latest
+JUPYTER_IMAGE=bdrci/pydata-2019-jupyter:latest
+cd docker/jupyter
+docker build -t $AIRFLOW_IMAGE .
+cd ../airflow
+docker build -t $JUPYTER_IMAGE .
+cd ../../
 
-# docker
-AIRFLOW_IMAGE=bigdatarepublic/pydata-2019-airflow:0.0.0
-JUPYTER_IMAGE=bigdatarepublic/pydata-2019-jupyter:0.0.0
-cd /docker
-docker build -t $AIRFLOW_IMAGE -f airflow.Dockerfile .
-docker build -t $JUPYTER_IMAGE -f jupyter.Dockerfile .
+# push images
 docker push $AIRFLOW_IMAGE
 docker push $JUPYTER_IMAGE
-cd ../
 
-# jinja
+# jinja2
 NUMBER_OF_USERS=$1
+mkdir -p build
 cp -R terraform build/terraform
 python jinja2/generate_user_resources.py "$NUMBER_OF_USERS" build/terraform
 
