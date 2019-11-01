@@ -70,7 +70,7 @@
   },
   {
     "name": "${jupyter_container_name}",
-    "image": "${jupyter_image}",
+    "image": "bdrci/pydata-2019-jupyter",
     "cpu": 512,
     "memory": 1024,
     "networkMode": "awsvpc",

@@ -22,10 +22,9 @@ data "template_file" "app" {
   template = file("./modules/user/templates/ecs/app.json.tpl")
 
   vars = {
-    airflow_image = "puckel/docker-airflow:1.10.4"
+    airflow_image = "bdrci/pydata-2019-airflow"
     airflow_port = var.airflow_port
     aws_region = var.aws_region
-    jupyter_image = "jupyter/scipy-notebook"
     jupyter_port = var.jupyter_port
     airflow_webserver_container_name = "airflow-webserver"
     jupyter_container_name = "jupyter"
