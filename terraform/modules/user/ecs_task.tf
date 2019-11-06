@@ -53,6 +53,11 @@ resource "aws_ecs_task_definition" "app" {
     name = var.dags_volume_name
     host_path = "/efs/${var.user_name}/dags"
   }
+
+  placement_constraints {
+    type       = "memberOf"
+    expression = "ec2InstanceId == '${aws_instance.ecs.id}'"
+  }
 }
 
 resource "aws_ecs_service" "airflow" {
