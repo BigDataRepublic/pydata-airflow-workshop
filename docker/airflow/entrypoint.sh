@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 case "$1" in
   webserver)
     airflow upgradedb
@@ -6,10 +8,15 @@ case "$1" in
       --conn_id s3 \
       --conn_type S3 \
       --conn_extra "{\"region_name\": \"$AWS_REGION\"}"
+    exec airflow webserver
     ;;
   scheduler)
     # To give the webserver time to run initdb.
     sleep 10
-    exec airflow "$@"
+    exec airflow scheduler
+    ;;
+  *)
+    # The command is something like bash, not an airflow subcommand. Just run it in the right environment.
+    exec "$@"
     ;;
 esac
