@@ -12,7 +12,7 @@ variable "load_balancer_security_group_id" {}
 
 variable "ecs_security_group_id" {}
 
-variable "efs_id" {}
+variable "rds_security_group_id" {}
 
 variable "iam_instance_profile_name" {}
 

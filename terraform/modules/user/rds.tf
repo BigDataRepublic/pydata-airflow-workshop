@@ -8,7 +8,7 @@ resource "aws_db_instance" "db" {
   username = "airflow"
   db_subnet_group_name = aws_db_subnet_group.vpc.name
   skip_final_snapshot = true
-
+  vpc_security_group_ids = [var.rds_security_group_id]
 }
 
 resource "aws_db_subnet_group" "vpc" {

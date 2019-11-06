@@ -72,14 +72,14 @@ resource "aws_security_group" "container_instance" {
   }
 }
 
-resource "aws_security_group" "efs" {
-  name = "pydata-efs"
-  description = "limits EFS access to EC2 container instances only"
+resource "aws_security_group" "rds" {
+  name = "pydata-rds"
+  description = "limits RDS access to ECS tasks only"
   vpc_id = aws_vpc.main.id
   ingress {
     protocol = "tcp"
-    from_port = 2049
-    to_port = 2049
-    security_groups = [aws_security_group.container_instance.id]
+    from_port = 5432
+    to_port = 5432
+    security_groups = [aws_security_group.ecs.id]
   }
 }

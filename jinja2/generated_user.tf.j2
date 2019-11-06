@@ -8,7 +8,7 @@ module "{{user_name}}" {
   subnets= module.shared.subnets
   load_balancer_security_group_id = module.shared.load_balancer_security_group_id
   ecs_security_group_id = module.shared.ecs_security_group_id
-  efs_id = module.shared.efs_id
+  rds_security_group_id = module.shared.rds_security_group_id
   iam_instance_profile_name = module.shared.iam_instance_profile_name
   container_instance_security_group_id = module.shared.container_instance_security_group_id
   aws_region = var.aws_region
