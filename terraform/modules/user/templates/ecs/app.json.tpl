@@ -29,6 +29,10 @@
         {
           "name": "AIRFLOW_HOME",
           "value": "${airflow_home_folder}"
+        },
+        {
+          "name": "WORKSHOP_USER",
+          "value": "${user_name}"
         }
     ]
   },
@@ -65,6 +69,10 @@
         {
           "name": "AIRFLOW__SCHEDULER__DIR_LIST_INTERVAL",
           "value": "30"
+        },
+        {
+          "name": "WORKSHOP_USER",
+          "value": "${user_name}"
         }
     ]
   },
@@ -93,6 +101,12 @@
         "containerPath": "/home/jovyan/dags",
         "sourceVolume": "${dags_volume_name}",
         "readOnly": false
+      }
+    ],
+    "environment": [
+      {
+        "name": "WORKSHOP_USER",
+        "value": "${user_name}"
       }
     ]
   }

@@ -32,6 +32,7 @@ data "template_file" "app" {
     airflow_volume_name = var.airflow_volume_name
     airflow_home_folder = var.airflow_home_folder
     dags_volume_name = var.dags_volume_name
+    user_name = var.user_name
   }
 }
 

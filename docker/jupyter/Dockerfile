@@ -12,4 +12,4 @@ COPY jupyter_notebook_config.py .jupyter
 
 # copy workshop content
 COPY src/Workshop.ipynb .
-COPY src/answers answers
+COPY src/transform_scripts transform_scripts
