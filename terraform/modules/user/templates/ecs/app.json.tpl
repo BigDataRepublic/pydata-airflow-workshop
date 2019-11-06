@@ -37,6 +37,10 @@
         {
           "name": "WORKSHOP_USER",
           "value": "${user_name}"
+        },
+        {
+          "name": "AWS_REGION",
+          "value": "${aws_region}"
         }
     ]
   },

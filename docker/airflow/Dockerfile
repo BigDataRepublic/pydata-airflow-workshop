@@ -6,4 +6,5 @@ COPY requirements.txt .
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt && \
     rm requirements.txt
+COPY entrypoint.sh /entrypoint.sh
 USER airflow
