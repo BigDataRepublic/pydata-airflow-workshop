@@ -25,7 +25,7 @@ def generate_user_resources(number_of_users, target_folder):
 def generate_user_names(number_of_users):
     wordfile = xp.locate_wordfile()
     possible_user_names = xp.generate_wordlist(wordfile=wordfile, min_length=5, max_length=8)
-    user_names = possible_user_names[:number_of_users]
+    user_names = sorted(possible_user_names)[:number_of_users]
 
     return user_names
 

@@ -4,12 +4,14 @@ resource "aws_db_instance" "db" {
   instance_class = "db.t2.micro"
   name = "airflow"
   port = 5432
-  password = "airflow"
+  password = "airflow1234"
   username = "airflow"
   db_subnet_group_name = aws_db_subnet_group.vpc.name
+  skip_final_snapshot = true
+
 }
 
 resource "aws_db_subnet_group" "vpc" {
-  name = "pydata"
-  subnet_ids = [var.subnets.0.id]
+  name = "pydata-${var.user_name}}"
+  subnet_ids = var.subnets.*.id
 }
