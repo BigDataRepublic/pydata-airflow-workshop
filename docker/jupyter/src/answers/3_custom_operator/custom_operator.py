@@ -7,7 +7,7 @@ import os
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_dir)
 from operators.model_training import S3ModelTrainingOperator
-from functions.train import train
+from functions.train import train_model
 
 with DAG(
     dag_id='custom_operator',
@@ -26,7 +26,7 @@ with DAG(
 
     train_operator = S3ModelTrainingOperator(
         task_id='train',
-        python_callable=train,
+        python_callable=train_model,
         source_s3_key='s3://',
         dest_s3_key='s3://',
         source_aws_conn_id='s3',
