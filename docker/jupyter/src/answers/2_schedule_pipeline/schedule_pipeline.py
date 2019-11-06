@@ -9,7 +9,7 @@ with DAG(
     dag_id='schedule_pipeline',
     schedule_interval='0 0 * * *',
     start_date=datetime.datetime(2019, 10, 1)
-):
+) as dag:
     preprocess_operator = S3FileTransformOperator(
         task_id='preprocess',
         transform_script='transform_scripts/preprocess.py',

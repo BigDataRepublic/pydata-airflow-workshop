@@ -9,15 +9,11 @@ sys.path.append(current_dir)
 from operators.model_training import S3ModelTrainingOperator
 from functions.train import train
 
-default_args = {
-    'start_date': datetime.datetime(2019, 10, 1)
-}
-
 with DAG(
     dag_id='custom_operator',
     schedule_interval='0 0 * * *',
-    default_args=default_args
-):
+    start_date=datetime.datetime(2019, 10, 1)
+) as dag:
     preprocess_operator = S3FileTransformOperator(
         task_id='preprocess',
         transform_script='transform_scripts/preprocess.py',
