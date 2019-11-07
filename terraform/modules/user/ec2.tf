@@ -19,7 +19,6 @@ data "template_file" "ec2_user_data" {
 
   vars = {
     cluster_name = var.ecs_cluster.name
-    efs_id = var.efs_id
     user_name = var.user_name
   }
 }

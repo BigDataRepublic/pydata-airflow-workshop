@@ -11,4 +11,4 @@
 .idea
 .ipynb_checkpoints
 
-build/
+terraform/generated*.tf

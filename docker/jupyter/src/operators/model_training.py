@@ -39,10 +39,6 @@ class S3ModelTrainingOperator(BaseOperator):
         self.output_encoding = sys.getdefaultencoding()
 
     def execute(self, context):
-        if self.transform_script is None and self.select_expression is None:
-            raise AirflowException(
-                "Either transform_script or select_expression must be specified")
-
         source_s3 = S3Hook(aws_conn_id=self.source_aws_conn_id,
                            verify=self.source_verify)
         dest_s3 = S3Hook(aws_conn_id=self.dest_aws_conn_id,

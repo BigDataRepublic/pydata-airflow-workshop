@@ -13,3 +13,5 @@ COPY jupyter_notebook_config.py .jupyter
 # copy workshop content
 COPY src/Workshop.ipynb .
 COPY src/transform_scripts transform_scripts
+COPY src/functions functions
+COPY src/operators operators

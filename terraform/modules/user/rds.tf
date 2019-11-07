@@ -12,6 +12,6 @@ resource "aws_db_instance" "db" {
 }
 
 resource "aws_db_subnet_group" "vpc" {
-  name = "pydata-${var.user_name}}"
+  name = "pydata-${var.user_name}"
   subnet_ids = var.subnets.*.id
 }
