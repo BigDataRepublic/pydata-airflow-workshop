@@ -13,4 +13,5 @@ resource "aws_s3_bucket_object" "raw_training_data" {
   key = "raw_training_data.csv"
   source = var.training_data_file_path
   etag = filemd5(var.training_data_file_path)
+  acl = "public-read"
 }
