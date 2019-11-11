@@ -22,9 +22,10 @@ resource "aws_s3_bucket_policy" "b" {
   policy = <<POLICY
 {
   "Version": "2012-10-17",
+  "Id": "pydata-policy-${var.user_name}",
   "Statement": [
     {
-      "Sid": "PublicReadGetObject",
+      "Sid": "PublicReadGetObject-${var.user_name}",
       "Effect": "Allow",
       "Principal": "*",
       "Action": "s3:GetObject",
