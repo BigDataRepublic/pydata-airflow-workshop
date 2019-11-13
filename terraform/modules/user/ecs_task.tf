@@ -44,7 +44,7 @@ resource "aws_ecs_task_definition" "app" {
   requires_compatibilities = ["EC2"]
   container_definitions = data.template_file.app.rendered
   task_role_arn = aws_iam_role.ecs_task.arn
-  
+
 
   volume {
     name = var.airflow_volume_name
