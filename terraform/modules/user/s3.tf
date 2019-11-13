@@ -16,22 +16,23 @@ resource "aws_s3_bucket_object" "raw_training_data" {
   acl = "public-read"
 }
 
-resource "aws_s3_bucket_policy" "b" {
-  bucket = aws_s3_bucket.workshop.id
+//resource "aws_s3_bucket_policy" "b" {
+//  bucket = aws_s3_bucket.workshop.id
+//
+//  policy = <<POLICY
+//{
+//  "Version": "2012-10-17",
+//  "Id": "pydata-policy-${var.user_name}",
+//  "Statement": [
+//    {
+//      "Sid": "PublicReadGetObject-${var.user_name}",
+//      "Effect": "Allow",
+//      "Principal": "*",
+//      "Action": "s3:GetObject",
+//      "Resource": "arn:aws:s3:::pydata-eindhoven-2019-airflow-abacus/*"
+//     }
+//  ]
+//}
+//POLICY
+//}
 
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Id": "pydata-policy-${var.user_name}",
-  "Statement": [
-    {
-      "Sid": "PublicReadGetObject-${var.user_name}",
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::pydata-eindhoven-2019-airflow-abacus/*"
-     }
-  ]
-}
-POLICY
-}
