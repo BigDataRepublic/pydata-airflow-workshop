@@ -41,7 +41,8 @@ resource "aws_ecs_task_definition" "app" {
   family = "pydata-${var.user_name}"
   execution_role_arn = var.ecs_task_execution_role_arn
   network_mode = "awsvpc"
-  requires_compatibilities = ["EC2"]
+  requires_compatibilities = [
+    "EC2"]
   container_definitions = data.template_file.app.rendered
   task_role_arn = aws_iam_role.ecs_task.arn
 
@@ -57,7 +58,7 @@ resource "aws_ecs_task_definition" "app" {
   }
 
   placement_constraints {
-    type       = "memberOf"
+    type = "memberOf"
     expression = "ec2InstanceId == '${aws_instance.ecs.id}'"
   }
 }
@@ -69,7 +70,8 @@ resource "aws_ecs_service" "airflow" {
   desired_count = 1
 
   network_configuration {
-    security_groups = [var.ecs_security_group_id]
+    security_groups = [
+      var.ecs_security_group_id]
     subnets = var.subnets.*.id
   }
 
@@ -85,5 +87,6 @@ resource "aws_ecs_service" "airflow" {
     container_port = var.jupyter_port
   }
 
-  depends_on = [aws_alb_listener.airflow]
+  depends_on = [
+    aws_alb_listener.airflow]
 }
