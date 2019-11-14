@@ -32,15 +32,15 @@ def generate_user_names(number_of_users):
 
 
 def render_templates(users, airflow_visit_ports, jupyter_visit_ports, template_file):
-    return ('\r\n' * 2).join([render_template(*i, template_file) for i in zip(users, airflow_visit_ports, jupyter_visit_ports)])
+    return ('\r\n' * 2).join([render_template(*i, priority=priority+100, template_file=template_file) for priority, i in enumerate(zip(users, airflow_visit_ports, jupyter_visit_ports))])
 
 
-def render_template(user, airflow_visit_port, jupyter_visit_port, template_file):
+def render_template(user, airflow_visit_port, jupyter_visit_port, priority, template_file):
     template_folder = os.path.dirname(os.path.realpath(__file__))
     template_loader = jinja2.FileSystemLoader(searchpath=template_folder)
     template_environment = jinja2.Environment(loader=template_loader)
     template = template_environment.get_template(template_file)
-    output_text = template.render(user_name=user, airflow_visit_port=airflow_visit_port, jupyter_visit_port=jupyter_visit_port)
+    output_text = template.render(user_name=user, airflow_visit_port=airflow_visit_port, jupyter_visit_port=jupyter_visit_port, listener_priority=priority)
 
     return output_text
 

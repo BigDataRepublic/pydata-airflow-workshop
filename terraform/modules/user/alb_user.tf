@@ -34,17 +34,6 @@ resource "aws_alb_target_group" "jupyter" {
   }
 }
 
-resource "aws_alb_listener" "jupyter" {
-  load_balancer_arn = var.aws_alb_main_id
-  port = var.jupyter_visit_port
-  protocol = "HTTP"
-
-  default_action {
-    target_group_arn = aws_alb_target_group.jupyter.id
-    type = "forward"
-  }
-}
-
 
 resource "aws_alb_listener" "airflow" {
   load_balancer_arn = var.aws_alb_main_id
@@ -57,32 +46,36 @@ resource "aws_alb_listener" "airflow" {
   }
 }
 
+resource "aws_alb_listener" "jupyter" {
+  load_balancer_arn = var.aws_alb_main_id
+  port = var.jupyter_visit_port
+  protocol = "HTTP"
 
-//resource "aws_alb_listener" "jupyter_redirect" {
-//  load_balancer_arn = var.aws_alb_main_id
-//  port = 8888
-//  protocol = "HTTP"
-//
-//  default_action {
-//    target_group_arn = aws_alb_target_group.jupyter.id
-//    type = "forward"
-//  }
-//}
+  default_action {
+    target_group_arn = aws_alb_target_group.jupyter.id
+    type = "forward"
+  }
+}
 
-//
-//
-//resource "aws_lb_listener_rule" "jupyter" {
-//  listener_arn = "${aws_alb_listener.jupyter_redirect.arn}"
-//  priority     = 100
-//
-//  action {
-//    type             = "forward"
-//    target_group_arn = aws_alb_target_group.jupyter.id
-//  }
-//
-//  condition {
-//    field  = "path-pattern"
-//    values = ["/${var.user_name}/*"]
-//  }
-//}
-//
+resource "aws_lb_listener_rule" "jupyter" {
+  listener_arn = var.aws_alb_listener_jupyter_redirect
+  priority = var.listener_priority
+
+  action {
+    type = "redirect"
+    redirect {
+      host = "#{host}"
+      port = aws_alb_listener.jupyter.port
+      path = "/"
+      protocol = "HTTP"
+      status_code = "HTTP_302"
+    }
+
+  }
+
+  condition {
+    field = "path-pattern"
+    values = [
+      "/${var.user_name}/*"]
+  }
+}

@@ -31,3 +31,7 @@ variable "aws_alb_main_id" {}
 variable "jupyter_visit_port" {}
 
 variable "airflow_visit_port" {}
+
+variable "aws_alb_listener_jupyter_redirect" {}
+
+variable "listener_priority" {}
