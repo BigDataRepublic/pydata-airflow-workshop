@@ -4,6 +4,11 @@ module "{{user_name}}" {
   user_name = "{{user_name}}"
   airflow_port = var.airflow_port
   jupyter_port = var.jupyter_port
+
+  jupyter_visit_port = {{jupyter_visit_port}}
+  airflow_visit_port = {{airflow_visit_port}}
+  aws_alb_main_id = module.shared.aws_alb_main_id
+
   vpc_id = module.shared.vpc_id
   subnets= module.shared.subnets
   load_balancer_security_group_id = module.shared.load_balancer_security_group_id
