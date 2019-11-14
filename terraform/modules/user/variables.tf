@@ -26,12 +26,11 @@ variable "log_group_name" {}
 
 variable "ecs_task_execution_role_arn" {}
 
-variable "aws_alb_main_id" {}
+variable "aws_alb_main" {}
 
 variable "jupyter_visit_port" {}
 
 variable "airflow_visit_port" {}
 
-variable "aws_alb_listener_jupyter_redirect" {}
+variable "aws_alb_listener_fixed_response" {}
 
-variable "listener_priority" {}

@@ -36,7 +36,7 @@ resource "aws_alb_target_group" "jupyter" {
 
 
 resource "aws_alb_listener" "airflow" {
-  load_balancer_arn = var.aws_alb_main_id
+  load_balancer_arn = var.aws_alb_main.id
   port = var.airflow_visit_port
   protocol = "HTTP"
 
@@ -46,8 +46,30 @@ resource "aws_alb_listener" "airflow" {
   }
 }
 
+resource "aws_lb_listener_rule" "airflow" {
+  listener_arn = var.aws_alb_listener_fixed_response.arn
+  priority = var.airflow_visit_port
+
+  action {
+    type = "redirect"
+    redirect {
+      host = "#{host}"
+      port = aws_alb_listener.airflow.port
+      path = "/"
+      protocol = "HTTP"
+      status_code = "HTTP_302"
+    }
+  }
+
+  condition {
+    field = "path-pattern"
+    values = [
+      "/${var.user_name}/airflow"]
+  }
+}
+
 resource "aws_alb_listener" "jupyter" {
-  load_balancer_arn = var.aws_alb_main_id
+  load_balancer_arn = var.aws_alb_main.id
   port = var.jupyter_visit_port
   protocol = "HTTP"
 
@@ -58,8 +80,8 @@ resource "aws_alb_listener" "jupyter" {
 }
 
 resource "aws_lb_listener_rule" "jupyter" {
-  listener_arn = var.aws_alb_listener_jupyter_redirect
-  priority = var.listener_priority
+  listener_arn = var.aws_alb_listener_fixed_response.arn
+  priority = aws_alb_listener.jupyter.port
 
   action {
     type = "redirect"
@@ -70,12 +92,11 @@ resource "aws_lb_listener_rule" "jupyter" {
       protocol = "HTTP"
       status_code = "HTTP_302"
     }
-
   }
 
   condition {
     field = "path-pattern"
     values = [
-      "/${var.user_name}/*"]
+      "/${var.user_name}/jupyter"]
   }
 }

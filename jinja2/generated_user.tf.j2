@@ -7,8 +7,8 @@ module "{{user_name}}" {
 
   jupyter_visit_port = {{jupyter_visit_port}}
   airflow_visit_port = {{airflow_visit_port}}
-  aws_alb_main_id = module.shared.aws_alb_main_id
-  aws_alb_listener_jupyter_redirect = module.shared.aws_alb_listener_jupyter_redirect
+  aws_alb_main = module.shared.aws_alb_main
+  aws_alb_listener_fixed_response = module.shared.aws_alb_listener_fixed_response
   vpc_id = module.shared.vpc_id
   subnets = module.shared.subnets
   load_balancer_security_group_id = module.shared.load_balancer_security_group_id
@@ -20,5 +20,4 @@ module "{{user_name}}" {
   ecs_cluster = module.shared.ecs_cluster
   log_group_name = module.shared.log_group_name
   ecs_task_execution_role_arn = module.shared.ecs_task_execution_role_arn
-  listener_priority = {{listener_priority}}
-}
+    }

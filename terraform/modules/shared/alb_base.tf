@@ -6,7 +6,7 @@ resource "aws_alb" "main" {
 }
 
 
-resource "aws_alb_listener" "jupyter_redirect" {
+resource "aws_alb_listener" "fixed_response" {
   load_balancer_arn = aws_alb.main.arn
   port = 80
   protocol = "HTTP"
