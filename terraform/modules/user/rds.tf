@@ -9,6 +9,7 @@ resource "aws_db_instance" "db" {
   db_subnet_group_name = aws_db_subnet_group.vpc.name
   skip_final_snapshot = true
   vpc_security_group_ids = [var.rds_security_group_id]
+  publicly_accessible = true
 }
 
 resource "aws_db_subnet_group" "vpc" {

@@ -39,7 +39,6 @@ output "ecs_task_execution_role_arn" {
 }
 
 
-
 output "aws_alb_main" {
   value = aws_alb.main
 }
