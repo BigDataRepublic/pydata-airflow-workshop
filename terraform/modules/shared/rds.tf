@@ -1,9 +1,7 @@
-
 resource "aws_db_subnet_group" "vpc" {
   name = "pydata"
   subnet_ids = aws_subnet.public.*.id
 }
-
 
 
 resource "aws_db_instance" "db" {
@@ -16,6 +14,7 @@ resource "aws_db_instance" "db" {
   username = "airflow"
   db_subnet_group_name = aws_db_subnet_group.vpc.name
   skip_final_snapshot = true
-  vpc_security_group_ids = [aws_security_group.rds]
+  vpc_security_group_ids = [
+    aws_security_group.rds.id]
   publicly_accessible = true
 }

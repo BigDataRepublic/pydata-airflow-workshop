@@ -34,4 +34,4 @@ variable "airflow_visit_port" {}
 
 variable "aws_alb_listener_fixed_response" {}
 
-variable "aws_db_instance" {}
+variable "aws_db_instance_db" {}
