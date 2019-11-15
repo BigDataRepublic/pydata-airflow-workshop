@@ -33,7 +33,7 @@ data "template_file" "app" {
     airflow_home_folder = var.airflow_home_folder
     dags_volume_name = var.dags_volume_name
     user_name = var.user_name
-    db_connection_string = "postgresql+psycopg2://${var.aws_db_instance_db.username}:${var.aws_db_instance_db.password}@${var.aws_db_instance_db.endpoint}/${postgresql_database.user_database.name}"
+    db_connection_string = "postgresql+psycopg2://${postgresql_role.user.name}:${postgresql_role.user.password}@${var.aws_db_instance_db.endpoint}/${postgresql_database.user_database.name}"
   }
 }
 
