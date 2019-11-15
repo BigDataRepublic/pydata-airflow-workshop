@@ -12,12 +12,13 @@ OUTPUT_FILE = 'generated_outputs.tf'
 
 def generate_user_resources(number_of_users, target_folder):
     users = generate_user_names(number_of_users)
-
-    user_file_content = render_templates(users, USER_FILE + '.j2')
+    airflow_visit_ports = list(range(9000, 9000 + len(users)))
+    jupyter_visit_ports = list(range(8000, 8000 + len(users)))
+    user_file_content = render_templates(users, airflow_visit_ports, jupyter_visit_ports, USER_FILE + '.j2')
     with open(f'{target_folder}/{USER_FILE}', 'w') as f:
         f.write(user_file_content)
 
-    output_file_content = render_templates(users, OUTPUT_FILE + '.j2')
+    output_file_content = render_templates(users, airflow_visit_ports, jupyter_visit_ports, OUTPUT_FILE + '.j2')
     with open(f'{target_folder}/{OUTPUT_FILE}', 'w') as f:
         f.write(output_file_content)
 
@@ -30,16 +31,16 @@ def generate_user_names(number_of_users):
     return user_names
 
 
-def render_templates(users, template_file):
-    return ('\r\n' * 2).join([render_template(user, template_file) for user in users])
+def render_templates(users, airflow_visit_ports, jupyter_visit_ports, template_file):
+    return ('\r\n' * 2).join([render_template(*i,   template_file=template_file) for i in zip(users, airflow_visit_ports, jupyter_visit_ports)])
 
 
-def render_template(user, template_file):
+def render_template(user, airflow_visit_port, jupyter_visit_port, template_file):
     template_folder = os.path.dirname(os.path.realpath(__file__))
     template_loader = jinja2.FileSystemLoader(searchpath=template_folder)
     template_environment = jinja2.Environment(loader=template_loader)
     template = template_environment.get_template(template_file)
-    output_text = template.render(user_name=user)
+    output_text = template.render(user_name=user, airflow_visit_port=airflow_visit_port, jupyter_visit_port=jupyter_visit_port)
 
     return output_text
 

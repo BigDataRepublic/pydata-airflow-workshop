@@ -9,3 +9,4 @@ variable "jupyter_port" {
 variable "aws_region" {
   default = "eu-west-1"
 }
+

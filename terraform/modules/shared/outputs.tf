@@ -37,3 +37,13 @@ output "log_group_name" {
 output "ecs_task_execution_role_arn" {
   value = aws_iam_role.ecs_task_execution_role.arn
 }
+
+
+
+output "aws_alb_main" {
+  value = aws_alb.main
+}
+
+output "aws_alb_listener_fixed_response" {
+  value = aws_alb_listener.fixed_response
+}
