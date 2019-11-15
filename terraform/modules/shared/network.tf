@@ -2,6 +2,11 @@ data "aws_availability_zones" "available" {}
 
 resource "aws_vpc" "main" {
   cidr_block = "10.222.0.0/16"
+  enable_dns_support = true
+  enable_dns_hostnames = true
+  tags = {
+    name = "pydata"
+  }
 }
 
 # ALB requires a VPC that spans multiple availability zones
@@ -27,7 +32,8 @@ resource "aws_route" "internet_access" {
 # It is used instead of adding a NAT gateway to give ECS tasks internet access.
 # The buckets are used in the Airflow tutorial as external storage to interact with.
 resource "aws_vpc_endpoint" "s3" {
-  vpc_id       = aws_vpc.main.id
+  vpc_id = aws_vpc.main.id
   service_name = "com.amazonaws.${var.aws_region}.s3"
-  route_table_ids = [aws_vpc.main.main_route_table_id]
+  route_table_ids = [
+    aws_vpc.main.main_route_table_id]
 }

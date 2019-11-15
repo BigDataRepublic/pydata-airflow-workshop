@@ -33,9 +33,10 @@ data "template_file" "app" {
     airflow_home_folder = var.airflow_home_folder
     dags_volume_name = var.dags_volume_name
     user_name = var.user_name
-    db_connection_string = "postgresql+psycopg2://${aws_db_instance.db.username}:${aws_db_instance.db.password}@${aws_db_instance.db.endpoint}/${aws_db_instance.db.name}"
+    db_connection_string = "postgresql+psycopg2://${var.aws_db_instance_db.username}:${var.aws_db_instance_db.password}@${var.aws_db_instance_db.endpoint}/${postgresql_database.user_database.name}"
   }
 }
+
 
 resource "aws_ecs_task_definition" "app" {
   family = "pydata-${var.user_name}"
