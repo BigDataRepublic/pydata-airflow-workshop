@@ -6,11 +6,11 @@ provider "aws" {
 
 
 provider "postgresql" {
-  host = module.shared.aws_db_instance_db.address
-  port = 5432
+  host = var.rds_host
+  port = var.rds_port
   database = "airflow"
-  username = module.shared.aws_db_instance_db.username
-  password = module.shared.aws_db_instance_db.password
+  username = var.rds_username
+  password = var.rds_database
   sslmode = "disable"
   superuser = false
   connect_timeout = 15

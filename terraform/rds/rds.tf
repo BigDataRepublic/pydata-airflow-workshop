@@ -3,7 +3,6 @@ resource "aws_db_subnet_group" "vpc" {
   subnet_ids = aws_subnet.public.*.id
 }
 
-
 resource "aws_db_instance" "db" {
   allocated_storage = 20
   engine = "postgres"

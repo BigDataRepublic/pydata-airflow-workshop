@@ -1,9 +1,7 @@
 resource "aws_security_group" "lb" {
   name = "pydata-airflow"
   description = "controls access to the ALB"
-  vpc_id = aws_vpc.main.id
-
-
+  vpc_id = data.aws_vpc.main.id
 
   ingress {
     protocol = "-1"
@@ -25,7 +23,7 @@ resource "aws_security_group" "lb" {
 resource "aws_security_group" "ecs" {
   name = "pydata-ecs-task"
   description = "allow inbound access from the ALB only"
-  vpc_id = aws_vpc.main.id
+  vpc_id = data.aws_vpc.main.id
 
   ingress {
     protocol = "tcp"
@@ -55,7 +53,7 @@ resource "aws_security_group" "ecs" {
 resource "aws_security_group" "container_instance" {
   name = "pydata-container-instance"
   description = "only allow egress for EC2 instances"
-  vpc_id = aws_vpc.main.id
+  vpc_id = data.aws_vpc.main.id
 
   egress {
     protocol = "-1"
@@ -74,20 +72,6 @@ resource "aws_security_group" "container_instance" {
   }
 }
 
-resource "aws_security_group" "rds" {
-  name = "pydata-rds"
-  description = "limits RDS access to ECS tasks only"
-  vpc_id = aws_vpc.main.id
-  ingress {
-    protocol = "-1"
-    from_port = 0
-    to_port = 0
-    cidr_blocks = [
-      "0.0.0.0/0"]
-    //    protocol = "tcp"
-    //    from_port = 5432
-    //    to_port = 5432
-    //    security_groups = [
-    //      aws_security_group.ecs.id]
-  }
+data "aws_security_group" "rds" {
+  id = var.rds_security_group_id
 }
