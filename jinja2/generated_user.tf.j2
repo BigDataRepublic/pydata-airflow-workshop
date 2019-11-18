@@ -20,6 +20,6 @@ module "{{user_name}}" {
   ecs_cluster = module.shared.ecs_cluster
   log_group_name = module.shared.log_group_name
   ecs_task_execution_role_arn = module.shared.ecs_task_execution_role_arn
-    aws_db_instance_db = module.shared.aws_db_instance_db
-
-    }
+  rds_host = var.rds_host
+  rds_port = var.rds_port
+}

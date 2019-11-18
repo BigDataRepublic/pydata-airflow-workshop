@@ -7,8 +7,9 @@
 
 # .tfvars files
 *.tfvars
+*.tfvars.json
 
 .idea
 .ipynb_checkpoints
 
-terraform/generated*.tf
+terraform/*/generated*.tf
