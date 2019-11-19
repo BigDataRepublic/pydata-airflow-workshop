@@ -31,7 +31,10 @@ resource "aws_key_pair" "deployer" {
 resource "aws_instance" "ecs" {
   ami = data.aws_ami.ecs.id
   instance_type = "t2.medium"
-  subnet_id = var.subnets.0.id
+
+  # sorting is required to transform the set into a list, which can be indexed
+  subnet_id = sort(var.subnet_ids)[0]
+
   associate_public_ip_address = true
   iam_instance_profile = var.iam_instance_profile_name
   user_data = data.template_file.ec2_user_data.rendered

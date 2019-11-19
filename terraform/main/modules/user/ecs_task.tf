@@ -73,7 +73,7 @@ resource "aws_ecs_service" "airflow" {
   network_configuration {
     security_groups = [
       var.ecs_security_group_id]
-    subnets = var.subnets.*.id
+    subnets = var.subnet_ids
   }
 
   load_balancer {

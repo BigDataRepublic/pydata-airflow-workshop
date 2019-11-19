@@ -6,18 +6,10 @@ variable "jupyter_port" {
   default = 8888
 }
 
-variable "aws_region" {}
+data "terraform_remote_state" "rds" {
+  backend = "local"
 
-variable "vpc_id" {}
-
-variable "rds_host" {}
-
-variable "rds_port" {}
-
-variable "rds_username" {}
-
-variable "rds_password" {}
-
-variable "rds_database" {}
-
-variable "rds_security_group_id" {}
+  config = {
+    path = "${path.module}/../rds/terraform.tfstate"
+  }
+}

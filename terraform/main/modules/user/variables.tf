@@ -6,7 +6,7 @@ variable "jupyter_port" {}
 
 variable "vpc_id" {}
 
-variable "subnets" {}
+variable "subnet_ids" {}
 
 variable "load_balancer_security_group_id" {}
 

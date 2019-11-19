@@ -21,7 +21,6 @@ python jinja2/generate_user_resources.py "$NUMBER_OF_USERS" terraform/main
 cd terraform/rds
 terraform init
 terraform apply
-terraform output -json > ../main/terraform.tfvars.json
 cd ../main
 terraform init
 terraform apply
