@@ -29,7 +29,7 @@ resource "aws_alb_target_group" "jupyter" {
     protocol = "HTTP"
     matcher = "200"
     timeout = "3"
-    path = "/tree"
+    path = "/login"
     unhealthy_threshold = "2"
   }
 }
