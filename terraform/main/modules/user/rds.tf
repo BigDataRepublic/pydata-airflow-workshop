@@ -1,4 +1,3 @@
-
 resource "postgresql_database" "user_database" {
   name = var.user_name
 }
@@ -16,7 +15,6 @@ resource postgresql_grant "all_tables" {
   object_type = "table"
   privileges  = ["ALL"]
 }
-
 
 resource postgresql_grant "all_sequences" {
   database    = postgresql_database.user_database.name

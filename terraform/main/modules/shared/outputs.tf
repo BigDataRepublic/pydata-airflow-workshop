@@ -1,9 +1,9 @@
 output "vpc_id" {
-  value = aws_vpc.main.id
+  value = data.aws_vpc.main.id
 }
 
-output "subnets" {
-  value = aws_subnet.public
+output "subnet_ids" {
+  value = data.aws_subnet_ids.subnets.ids
 }
 
 output "load_balancer_security_group_id" {
@@ -15,7 +15,7 @@ output "ecs_security_group_id" {
 }
 
 output "rds_security_group_id" {
-  value = aws_security_group.rds.id
+  value = data.aws_security_group.rds.id
 }
 
 output "iam_instance_profile_name" {
@@ -45,8 +45,4 @@ output "aws_alb_main" {
 
 output "aws_alb_listener_fixed_response" {
   value = aws_alb_listener.fixed_response
-}
-
-output "aws_db_instance_db" {
-  value = aws_db_instance.db
 }

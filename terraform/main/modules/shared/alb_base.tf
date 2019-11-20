@@ -1,6 +1,6 @@
 resource "aws_alb" "main" {
   name = "pydata-bigdatarepublic"
-  subnets = aws_subnet.public.*.id
+  subnets = data.aws_subnet_ids.subnets.ids
   security_groups = [
     aws_security_group.lb.id]
 }

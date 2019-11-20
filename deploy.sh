@@ -15,10 +15,12 @@ docker push $JUPYTER_IMAGE
 
 # jinja2
 NUMBER_OF_USERS=$1
-python jinja2/generate_user_resources.py "$NUMBER_OF_USERS" terraform
+python jinja2/generate_user_resources.py "$NUMBER_OF_USERS" terraform/main
 
 # terraform
-cd terraform
+cd terraform/rds
 terraform init
 terraform apply
-cd ../../
+cd ../main
+terraform init
+terraform apply

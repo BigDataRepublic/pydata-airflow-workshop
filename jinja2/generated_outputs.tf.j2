@@ -1,6 +1,0 @@
-output "{{user_name}}_jupyter" {
-  value = "${module.shared.aws_alb_main.dns_name}/{{user_name}}/jupyter"
-}
-output "{{user_name}}_airflow" {
-  value = "${module.shared.aws_alb_main.dns_name}/{{user_name}}/airflow"
-}

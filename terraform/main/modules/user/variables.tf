@@ -6,7 +6,7 @@ variable "jupyter_port" {}
 
 variable "vpc_id" {}
 
-variable "subnets" {}
+variable "subnet_ids" {}
 
 variable "load_balancer_security_group_id" {}
 
@@ -34,4 +34,6 @@ variable "airflow_visit_port" {}
 
 variable "aws_alb_listener_fixed_response" {}
 
-variable "aws_db_instance_db" {}
+variable "rds_host" {}
+
+variable "rds_port" {}
