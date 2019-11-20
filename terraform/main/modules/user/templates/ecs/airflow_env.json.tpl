@@ -13,4 +13,8 @@
 {
   "name": "AIRFLOW__CORE__SQL_ALCHEMY_CONN",
   "value": "${db_connection_string}"
+},
+{
+  "name": "AIRFLOW__API__AUTH_BACKEND",
+  "value": "airflow.api.auth.backend.deny_all"
 }

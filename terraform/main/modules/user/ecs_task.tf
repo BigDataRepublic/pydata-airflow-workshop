@@ -43,6 +43,7 @@ data "template_file" "app" {
     user_name = var.user_name
     airflow_env = data.template_file.airflow_env.rendered
     airflow_home_folder = var.airflow_home_folder
+    password = var.password
   }
 }
 

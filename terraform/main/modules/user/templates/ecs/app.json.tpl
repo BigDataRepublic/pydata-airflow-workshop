@@ -6,12 +6,12 @@
     "memory": 512,
     "networkMode": "awsvpc",
     "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "${log_group}",
-          "awslogs-region": "${aws_region}",
-          "awslogs-stream-prefix": "ecs/airflow-webserver"
-        }
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${log_group}",
+        "awslogs-region": "${aws_region}",
+        "awslogs-stream-prefix": "ecs/airflow-webserver"
+      }
     },
     "portMappings": [
       {
@@ -26,15 +26,19 @@
       }
     ],
     "environment": [
-        {
-          "name": "WORKSHOP_USER",
-          "value": "${user_name}"
-        },
-        {
-          "name": "AWS_REGION",
-          "value": "${aws_region}"
-        },
-        ${airflow_env}
+      {
+        "name": "WORKSHOP_USER",
+        "value": "${user_name}"
+      },
+      {
+        "name": "WORKSHOP_PASSWORD",
+        "value": "${password}"
+      },
+      {
+        "name": "AWS_REGION",
+        "value": "${aws_region}"
+      },
+    ${airflow_env}
     ]
   },
   {
@@ -45,12 +49,12 @@
     "networkMode": "awsvpc",
     "command": ["scheduler"],
     "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "${log_group}",
-          "awslogs-region": "${aws_region}",
-          "awslogs-stream-prefix": "ecs/airflow-scheduler"
-        }
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${log_group}",
+        "awslogs-region": "${aws_region}",
+        "awslogs-stream-prefix": "ecs/airflow-scheduler"
+      }
     },
     "mountPoints": [
       {
@@ -59,11 +63,11 @@
       }
     ],
     "environment": [
-        {
-          "name": "WORKSHOP_USER",
-          "value": "${user_name}"
-        },
-        ${airflow_env}
+      {
+        "name": "WORKSHOP_USER",
+        "value": "${user_name}"
+      },
+      ${airflow_env}
     ]
   },
   {
@@ -73,12 +77,12 @@
     "memory": 1024,
     "networkMode": "awsvpc",
     "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "${log_group}",
-          "awslogs-region": "${aws_region}",
-          "awslogs-stream-prefix": "ecs/jupyter"
-        }
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${log_group}",
+        "awslogs-region": "${aws_region}",
+        "awslogs-stream-prefix": "ecs/jupyter"
+      }
     },
     "portMappings": [
       {
@@ -97,6 +101,10 @@
       {
         "name": "WORKSHOP_USER",
         "value": "${user_name}"
+      },
+      {
+        "name": "WORKSHOP_PASSWORD",
+        "value": "${password}"
       }
     ]
   }
