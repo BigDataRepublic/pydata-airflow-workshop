@@ -13,13 +13,13 @@ resource "aws_alb_listener" "fixed_response" {
   port = 80
   protocol = "HTTP"
 
-    default_action {
-    type             = "fixed-response"
+  default_action {
+    type = "fixed-response"
 
     fixed_response {
-        content_type = "text/plain"
-        message_body = "HTTP Error 404: Please provide username"
-        status_code  = 404
+      content_type = "text/plain"
+      message_body = "HTTP Error 404: Please provide username"
+      status_code = 404
     }
   }
 }
