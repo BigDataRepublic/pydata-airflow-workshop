@@ -2,6 +2,7 @@ module "{{user_name}}" {
   source = "./modules/user"
   
   user_name = "{{user_name}}"
+  password = "{{password}}"
   airflow_port = var.airflow_port
   jupyter_port = var.jupyter_port
   jupyter_visit_port = {{jupyter_visit_port}}
