@@ -1,5 +1,6 @@
 resource "aws_alb" "main" {
-  name = "pydata-bigdatarepublic"
+  count = var.number_of_loadbalancers
+  name = "pydata-bigdatarepublic-${count.index}"
   subnets = data.aws_subnet_ids.subnets.ids
   security_groups = [
     aws_security_group.lb.id]
@@ -7,7 +8,8 @@ resource "aws_alb" "main" {
 
 
 resource "aws_alb_listener" "fixed_response" {
-  load_balancer_arn = aws_alb.main.arn
+  count = var.number_of_loadbalancers
+  load_balancer_arn = aws_alb.main[count.index].arn
   port = 80
   protocol = "HTTP"
 

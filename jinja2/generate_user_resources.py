@@ -8,15 +8,13 @@ import os
 TERRAFORM_FOLDER = '../terraform/'
 USER_FILE = 'generated_user.tf'
 
+USERS_PER_LOADBALANCER = 20
+
 
 def generate_user_resources(number_of_users, target_folder):
     users = generate_user_names(number_of_users)
-    airflow_visit_ports = list(range(9000, 9000 + len(users)))
-    jupyter_visit_ports = list(range(8000, 8000 + len(users)))
     user_file_content = render_templates(
         users,
-        airflow_visit_ports,
-        jupyter_visit_ports,
         USER_FILE + '.j2'
     )
     with open(f'{target_folder}/{USER_FILE}', 'w') as f:
@@ -31,22 +29,22 @@ def generate_user_names(number_of_users):
     return user_names
 
 
-def render_templates(users, airflow_visit_ports, jupyter_visit_ports, template_file):
+def render_templates(users, template_file):
     return ('\r\n' * 2).join([
-        render_template(*i, template_file=template_file)
-        for i in zip(users, airflow_visit_ports, jupyter_visit_ports)
+        render_template(user=user, user_number=counter, template_file=template_file)
+        for counter, user in enumerate(users)
     ])
 
 
-def render_template(user, airflow_visit_port, jupyter_visit_port, template_file):
+def render_template(user, user_number, template_file):
     template_folder = os.path.dirname(os.path.realpath(__file__))
     template_loader = jinja2.FileSystemLoader(searchpath=template_folder)
     template_environment = jinja2.Environment(loader=template_loader)
     template = template_environment.get_template(template_file)
     output_text = template.render(
         user_name=user,
-        airflow_visit_port=airflow_visit_port,
-        jupyter_visit_port=jupyter_visit_port
+        user_number=user_number,
+        load_balancer_number=int(user_number / USERS_PER_LOADBALANCER),
     )
 
     return output_text

@@ -37,3 +37,6 @@ variable "aws_alb_listener_fixed_response" {}
 variable "rds_host" {}
 
 variable "rds_port" {}
+
+variable "load_balancer_number" {}
+
