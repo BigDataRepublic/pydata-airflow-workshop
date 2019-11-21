@@ -1,13 +1,12 @@
 provider "aws" {
-//  shared_credentials_file = "$HOME/.aws/credentials"
+  shared_credentials_file = "$HOME/.aws/credentials"
   profile = "bdr"
-  region = var.aws_region
+  region = "eu-west-1"
 }
 
 
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "pydata-terraform-state"
-  # add stage because S3 buckets need to be unique
 
   versioning {
     enabled = true
