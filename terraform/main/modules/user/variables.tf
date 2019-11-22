@@ -26,17 +26,14 @@ variable "log_group_name" {}
 
 variable "ecs_task_execution_role_arn" {}
 
-variable "aws_alb_main" {}
+variable "aws_alb_main_arn" {}
 
 variable "jupyter_visit_port" {}
 
 variable "airflow_visit_port" {}
 
-variable "aws_alb_listener_fixed_response" {}
+variable "aws_alb_listener_fixed_response_arn" {}
 
 variable "rds_host" {}
 
 variable "rds_port" {}
-
-variable "load_balancer_number" {}
-

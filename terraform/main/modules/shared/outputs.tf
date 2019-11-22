@@ -38,10 +38,14 @@ output "ecs_task_execution_role_arn" {
   value = aws_iam_role.ecs_task_execution_role.arn
 }
 
-output "aws_alb_main" {
-  value = aws_alb.main
+output "aws_alb_main_arns" {
+  value = aws_alb.main.*.arn
 }
 
-output "aws_alb_listener_fixed_response" {
-  value = aws_alb_listener.fixed_response
+output "aws_alb_listener_fixed_response_arns" {
+  value = aws_alb_listener.fixed_response.*.arn
+}
+
+output "aws_alb_main_dns_names" {
+  value = aws_alb.main.*.dns_name
 }
