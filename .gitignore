@@ -9,6 +9,8 @@
 *.tfvars
 *.tfvars.json
 
+*.crash.log
+
 .idea
 .ipynb_checkpoints
 

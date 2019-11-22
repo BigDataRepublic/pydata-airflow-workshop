@@ -14,12 +14,9 @@ terraform {
 }
 
 provider "aws" {
-  shared_credentials_file = "$HOME/.aws/credentials"
   profile = "bdr"
-
   region = data.terraform_remote_state.rds.outputs.aws_region
 }
-
 
 provider "postgresql" {
   host = data.terraform_remote_state.rds.outputs.rds_host
