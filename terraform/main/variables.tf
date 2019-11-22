@@ -7,9 +7,17 @@ variable "jupyter_port" {
 }
 
 data "terraform_remote_state" "rds" {
-  backend = "local"
-
+  backend = "s3"
   config = {
-    path = "${path.module}/../rds/terraform.tfstate"
+    bucket = "pydata-terraform-state-rds"
+    key = "main/state"
+    region = "eu-west-1"
   }
 }
+
+
+
+variable "aws_region" {
+  default = "eu-west-1"
+}
+
