@@ -14,7 +14,6 @@ terraform {
 }
 
 provider "aws" {
-  profile = "bdr"
   region = data.terraform_remote_state.rds.outputs.aws_region
 }
 

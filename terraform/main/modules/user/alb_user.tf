@@ -62,8 +62,7 @@ resource "aws_lb_listener_rule" "airflow" {
 
   condition {
     field = "path-pattern"
-    values = [
-      "/${var.user_name}/airflow"]
+    values = ["/${var.user_name}/airflow"]
   }
 }
 
@@ -95,7 +94,6 @@ resource "aws_lb_listener_rule" "jupyter" {
 
   condition {
     field = "path-pattern"
-    values = [
-      "/${var.user_name}/jupyter"]
+    values = ["/${var.user_name}/jupyter"]
   }
 }
