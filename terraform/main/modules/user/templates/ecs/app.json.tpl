@@ -6,12 +6,12 @@
     "memory": 512,
     "networkMode": "awsvpc",
     "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "${log_group}",
-          "awslogs-region": "${aws_region}",
-          "awslogs-stream-prefix": "ecs/airflow-webserver"
-        }
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${log_group}",
+        "awslogs-region": "${aws_region}",
+        "awslogs-stream-prefix": "ecs/airflow-webserver"
+      }
     },
     "portMappings": [
       {
@@ -26,22 +26,19 @@
       }
     ],
     "environment": [
-        {
-          "name": "AIRFLOW_HOME",
-          "value": "${airflow_home_folder}"
-        },
-        {
-          "name": "AIRFLOW__CORE__SQL_ALCHEMY_CONN",
-          "value": "${db_connection_string}"
-        },
-        {
-          "name": "WORKSHOP_USER",
-          "value": "${user_name}"
-        },
-        {
-          "name": "AWS_REGION",
-          "value": "${aws_region}"
-        }
+      {
+        "name": "WORKSHOP_USER",
+        "value": "${user_name}"
+      },
+      {
+        "name": "WORKSHOP_PASSWORD",
+        "value": "${password}"
+      },
+      {
+        "name": "AWS_REGION",
+        "value": "${aws_region}"
+      },
+    ${airflow_env}
     ]
   },
   {
@@ -52,12 +49,12 @@
     "networkMode": "awsvpc",
     "command": ["scheduler"],
     "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "${log_group}",
-          "awslogs-region": "${aws_region}",
-          "awslogs-stream-prefix": "ecs/airflow-scheduler"
-        }
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${log_group}",
+        "awslogs-region": "${aws_region}",
+        "awslogs-stream-prefix": "ecs/airflow-scheduler"
+      }
     },
     "mountPoints": [
       {
@@ -66,26 +63,11 @@
       }
     ],
     "environment": [
-        {
-          "name": "AIRFLOW_HOME",
-          "value": "${airflow_home_folder}"
-        },
-        {
-          "name": "AIRFLOW__CORE__LOAD_EXAMPLES",
-          "value": "false"
-        },
-        {
-          "name": "AIRFLOW__SCHEDULER__DIR_LIST_INTERVAL",
-          "value": "10"
-        },
-        {
-          "name": "AIRFLOW__CORE__SQL_ALCHEMY_CONN",
-          "value": "${db_connection_string}"
-        },
-        {
-          "name": "WORKSHOP_USER",
-          "value": "${user_name}"
-        }
+      {
+        "name": "WORKSHOP_USER",
+        "value": "${user_name}"
+      },
+      ${airflow_env}
     ]
   },
   {
@@ -95,12 +77,12 @@
     "memory": 1024,
     "networkMode": "awsvpc",
     "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "${log_group}",
-          "awslogs-region": "${aws_region}",
-          "awslogs-stream-prefix": "ecs/jupyter"
-        }
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${log_group}",
+        "awslogs-region": "${aws_region}",
+        "awslogs-stream-prefix": "ecs/jupyter"
+      }
     },
     "portMappings": [
       {
@@ -119,6 +101,10 @@
       {
         "name": "WORKSHOP_USER",
         "value": "${user_name}"
+      },
+      {
+        "name": "WORKSHOP_PASSWORD",
+        "value": "${password}"
       }
     ]
   }

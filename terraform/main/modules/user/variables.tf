@@ -1,5 +1,7 @@
 variable "user_name" {}
 
+variable "password" {}
+
 variable "airflow_port" {}
 
 variable "jupyter_port" {}

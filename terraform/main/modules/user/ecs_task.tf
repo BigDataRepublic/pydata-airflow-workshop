@@ -18,6 +18,15 @@ variable "airflow_webserver_container_name" {
   default = "airflow-webserver"
 }
 
+data "template_file" "airflow_env" {
+  template = file("./modules/user/templates/ecs/airflow_env.json.tpl")
+
+  vars = {
+    airflow_home_folder = var.airflow_home_folder
+    db_connection_string = "postgresql+psycopg2://${postgresql_role.user.name}:${postgresql_role.user.password}@${var.rds_host}:${var.rds_port}/${postgresql_database.user_database.name}"
+  }
+}
+
 data "template_file" "app" {
   template = file("./modules/user/templates/ecs/app.json.tpl")
 
@@ -30,13 +39,13 @@ data "template_file" "app" {
     jupyter_container_name = "jupyter"
     log_group = var.log_group_name
     airflow_volume_name = var.airflow_volume_name
-    airflow_home_folder = var.airflow_home_folder
     dags_volume_name = var.dags_volume_name
     user_name = var.user_name
-    db_connection_string = "postgresql+psycopg2://${postgresql_role.user.name}:${postgresql_role.user.password}@${var.rds_host}:${var.rds_port}/${postgresql_database.user_database.name}"
+    airflow_env = data.template_file.airflow_env.rendered
+    airflow_home_folder = var.airflow_home_folder
+    password = var.password
   }
 }
-
 
 resource "aws_ecs_task_definition" "app" {
   family = "pydata-${var.user_name}"
@@ -46,7 +55,6 @@ resource "aws_ecs_task_definition" "app" {
     "EC2"]
   container_definitions = data.template_file.app.rendered
   task_role_arn = aws_iam_role.ecs_task.arn
-
 
   volume {
     name = var.airflow_volume_name
