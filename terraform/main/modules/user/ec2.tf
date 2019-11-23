@@ -30,7 +30,7 @@ resource "aws_key_pair" "deployer" {
 
 resource "aws_instance" "ecs" {
   ami = data.aws_ami.ecs.id
-  instance_type = "t2.medium"
+  instance_type = "t3.xlarge"
 
   # sorting is required to transform the set into a list, which can be indexed
   subnet_id = sort(var.subnet_ids)[0]

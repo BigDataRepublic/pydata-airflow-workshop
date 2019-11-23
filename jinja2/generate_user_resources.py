@@ -11,7 +11,7 @@ TERRAFORM_FOLDER = '../terraform/'
 USER_FILE = 'generated_user.tf'
 PASSWORD_LENGTH = 10
 
-USERS_PER_LOADBALANCER = 20
+USERS_PER_LOAD_BALANCER = 24
 
 
 def generate_user_resources(number_of_users, target_folder):
@@ -55,7 +55,7 @@ def render_template(user, password, user_number, template_file):
         user_name=user,
         user_number=user_number,
         password=password,
-        load_balancer_number=int(user_number / USERS_PER_LOADBALANCER),
+        load_balancer_number=int(user_number / USERS_PER_LOAD_BALANCER),
     )
 
     return output_text

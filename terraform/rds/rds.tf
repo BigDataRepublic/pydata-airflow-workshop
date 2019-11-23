@@ -6,7 +6,7 @@ resource "aws_db_subnet_group" "vpc" {
 resource "aws_db_instance" "db" {
   allocated_storage = 20
   engine = "postgres"
-  instance_class = "db.t3.2xlarge"
+  instance_class = var.rds_instance_class
   name = "airflow"
   port = 5432
   password = "airflow1234"

@@ -8,6 +8,4 @@ variable "vpc_id" {}
 
 variable "rds_security_group_id" {}
 
-variable "number_of_loadbalancers" {
-  default = 6
-}
+variable "number_of_load_balancers" {}
