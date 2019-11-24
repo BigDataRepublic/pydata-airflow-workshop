@@ -34,9 +34,8 @@ resource "aws_alb_target_group" "jupyter" {
   }
 }
 
-
 resource "aws_alb_listener" "airflow" {
-  load_balancer_arn = var.aws_alb_main.id
+  load_balancer_arn = var.aws_alb_main_arn
   port = var.airflow_visit_port
   protocol = "HTTP"
 
@@ -47,7 +46,7 @@ resource "aws_alb_listener" "airflow" {
 }
 
 resource "aws_lb_listener_rule" "airflow" {
-  listener_arn = var.aws_alb_listener_fixed_response.arn
+  listener_arn = var.aws_alb_listener_fixed_response_arn
   priority = var.airflow_visit_port
 
   action {
@@ -63,13 +62,12 @@ resource "aws_lb_listener_rule" "airflow" {
 
   condition {
     field = "path-pattern"
-    values = [
-      "/${var.user_name}/airflow"]
+    values = ["/${var.user_name}/airflow"]
   }
 }
 
 resource "aws_alb_listener" "jupyter" {
-  load_balancer_arn = var.aws_alb_main.id
+  load_balancer_arn = var.aws_alb_main_arn
   port = var.jupyter_visit_port
   protocol = "HTTP"
 
@@ -80,7 +78,7 @@ resource "aws_alb_listener" "jupyter" {
 }
 
 resource "aws_lb_listener_rule" "jupyter" {
-  listener_arn = var.aws_alb_listener_fixed_response.arn
+  listener_arn = var.aws_alb_listener_fixed_response_arn
   priority = aws_alb_listener.jupyter.port
 
   action {
@@ -96,7 +94,6 @@ resource "aws_lb_listener_rule" "jupyter" {
 
   condition {
     field = "path-pattern"
-    values = [
-      "/${var.user_name}/jupyter"]
+    values = ["/${var.user_name}/jupyter"]
   }
 }

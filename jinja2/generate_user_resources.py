@@ -11,17 +11,15 @@ TERRAFORM_FOLDER = '../terraform/'
 USER_FILE = 'generated_user.tf'
 PASSWORD_LENGTH = 10
 
+USERS_PER_LOAD_BALANCER = 24
+
 
 def generate_user_resources(number_of_users, target_folder):
     users = generate_user_names(number_of_users)
     passwords = [generate_password() for _ in range(number_of_users)]
-    airflow_visit_ports = list(range(9000, 9000 + len(users)))
-    jupyter_visit_ports = list(range(8000, 8000 + len(users)))
     user_file_content = render_templates(
         users,
         passwords,
-        airflow_visit_ports,
-        jupyter_visit_ports,
         USER_FILE + '.j2'
     )
     with open(f'{target_folder}/{USER_FILE}', 'w') as f:
@@ -41,23 +39,23 @@ def generate_password():
     return ''.join([random.choice(chars) for _ in range(PASSWORD_LENGTH)])
 
 
-def render_templates(users, passwords, airflow_visit_ports, jupyter_visit_ports, template_file):
+def render_templates(users, passwords, template_file):
     return ('\r\n' * 2).join([
-        render_template(*i, template_file=template_file)
-        for i in zip(users, passwords, airflow_visit_ports, jupyter_visit_ports)
+        render_template(user_number=user_number, password=password, user=user, template_file=template_file)
+        for user_number, (user, password) in enumerate(zip(users, passwords))
     ])
 
 
-def render_template(user, password, airflow_visit_port, jupyter_visit_port, template_file):
+def render_template(user, password, user_number, template_file):
     template_folder = os.path.dirname(os.path.realpath(__file__))
     template_loader = jinja2.FileSystemLoader(searchpath=template_folder)
     template_environment = jinja2.Environment(loader=template_loader)
     template = template_environment.get_template(template_file)
     output_text = template.render(
         user_name=user,
+        user_number=user_number,
         password=password,
-        airflow_visit_port=airflow_visit_port,
-        jupyter_visit_port=jupyter_visit_port
+        load_balancer_number=int(user_number / USERS_PER_LOAD_BALANCER),
     )
 
     return output_text

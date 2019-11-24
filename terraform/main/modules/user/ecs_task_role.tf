@@ -21,7 +21,7 @@ resource "aws_iam_role" "ecs_task" {
 
 
 resource "aws_iam_role_policy" "ecs_instance_s3_access" {
-  role = "${aws_iam_role.ecs_task.id}"
+  role = aws_iam_role.ecs_task.id
   name = "ecs_instance_s3_access_${var.user_name}"
   policy = <<EOF
 {

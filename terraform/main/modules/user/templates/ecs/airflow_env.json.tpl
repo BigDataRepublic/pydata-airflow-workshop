@@ -15,7 +15,7 @@
   "value": "${db_connection_string}"
 },
 {
-  "name": "AIRFLOW__SCHEDULER__DIR_LIST_INTERVAL",
+  "name": "AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL",
   "value": "10"
 },
 {

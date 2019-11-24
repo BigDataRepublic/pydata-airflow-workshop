@@ -5,10 +5,10 @@ module "{{user_name}}" {
   password = "{{password}}"
   airflow_port = var.airflow_port
   jupyter_port = var.jupyter_port
-  jupyter_visit_port = {{jupyter_visit_port}}
-  airflow_visit_port = {{airflow_visit_port}}
-  aws_alb_main = module.shared.aws_alb_main
-  aws_alb_listener_fixed_response = module.shared.aws_alb_listener_fixed_response
+  jupyter_visit_port = 8000 + {{user_number}}
+  airflow_visit_port = 9000 + {{user_number}}
+  aws_alb_main_arn = module.shared.aws_alb_main_arns[{{load_balancer_number}}]
+  aws_alb_listener_fixed_response_arn = module.shared.aws_alb_listener_fixed_response_arns[{{load_balancer_number}}]
   vpc_id = module.shared.vpc_id
   subnet_ids = module.shared.subnet_ids
   load_balancer_security_group_id = module.shared.load_balancer_security_group_id
