@@ -3,7 +3,7 @@ import glob
 from shutil import copyfile, rmtree
 from jinja2_scripts.generate_user_resources import generate_user_resources
 
-users_per_loadbalancer = 1
+users_per_loadbalancer = 20
 print(os.getcwd())
 
 
@@ -23,5 +23,5 @@ for number in range(2):
     # break
 
 
-# TODO deregister task deginitions
+# TODO deregister task definitions
 # list_task_definitions

@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import inspect
 from typing import List
 import requests
+import pandas as pd
 
 client = boto3.client('elbv2')
 
@@ -53,25 +54,31 @@ class ListenBalancer:
     lb: ALB
     endpoint: str
 
-import time
-import pandas as pd
-i = sorted(lbs.LoadBalancers, key=lambda x:x.DNSName)[0]
-print(i.DNSName)
 
-listeners = client.describe_listeners(LoadBalancerArn=i.LoadBalancerArn)
-listener_rules = [client.describe_rules(ListenerArn=listener['ListenerArn']) for listener in listeners['Listeners']]
-rules = [j for z in listener_rules for j in z['Rules'] if j['Conditions']]
-paths = [k['PathPatternConfig']['Values'] for j in rules for k in j['Conditions']]
-print(rules)
-print(paths)
+loadbalancers = sorted(lbs.LoadBalancers, key=lambda x: x.DNSName)
+
+
+def get_rules_with_conditions(listeners):
+    listener_rules = [client.describe_rules(ListenerArn=listener_['ListenerArn']) for listener_ in
+                      listeners['Listeners']]
+    return [j for z in listener_rules for j in z['Rules'] if j['Conditions']]
+
+
+listeners = [(i, client.describe_listeners(LoadBalancerArn=i.LoadBalancerArn)) for i in loadbalancers]
+rules_with_cond = [(key, get_rules_with_conditions(value)) for (key, value) in listeners]
+
+rules = [(lb, rule) for (lb, rule_list) in rules_with_cond for rule in rule_list]
+lb_conditions = [(lb, rule['Conditions']) for (lb, rule) in rules]
+
+lb_endpoints = [(lb, flatten([i['Values'] for i in rule])) for (lb, rule) in lb_conditions]
+lb_endpoints_flat = [(lb, endpoint) for (lb, endpoint_list) in lb_endpoints for endpoint in endpoint_list]
+
 for kk in range(1000):
     overview = {}
+    for lb, endpoint in lb_endpoints_flat:
+        r = requests.get("http://" + lb.DNSName + endpoint)
+        overview.update({endpoint: r.status_code})
 
-    for path in paths:
-        for element in path:
-            r = requests.get("http://" + i.DNSName + element)
-            overview.update({element: r.status_code})
-
-            if r.status_code is not 200:
-                raise Exception(r, path, element)
+        if r.status_code is not 200:
+            raise Exception(r, lb.DNSName, endpoint)
     print(pd.DataFrame.from_dict(overview, orient='index'))
