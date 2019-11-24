@@ -6,7 +6,6 @@ resource "postgresql_role" "user" {
   name = var.user_name
   password = "${var.user_name}-password"
   login = true
-//  superuser = true
   skip_reassign_owned = true
 }
 
