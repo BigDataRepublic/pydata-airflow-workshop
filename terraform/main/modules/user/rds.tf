@@ -6,6 +6,7 @@ resource "postgresql_role" "user" {
   name = var.user_name
   password = "${var.user_name}-password"
   login = true
+  skip_reassign_owned = true
 }
 
 resource postgresql_grant "all_tables" {

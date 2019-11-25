@@ -3,5 +3,18 @@ variable "aws_region" {
 }
 
 variable "rds_instance_class" {
-  default = "db.t3.micro"
+  default =  "db.t3.2xlarge"
+}
+
+
+variable "number_of_load_balancers" {
+  default = 6
+}
+
+variable "airflow_port" {
+  default = 8080
+}
+
+variable "jupyter_port" {
+  default = 8888
 }

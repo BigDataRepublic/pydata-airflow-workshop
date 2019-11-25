@@ -16,3 +16,4 @@
 
 terraform/*/generated*.tf
 .mypy_cache
+jinja2_scripts/__pycache__
