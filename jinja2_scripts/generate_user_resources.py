@@ -7,15 +7,27 @@ import os
 import random
 import string
 import numpy as np
+
 random.seed(1337)
 
 USER_FILE = 'generated_user.tf'
 PASSWORD_LENGTH = 10
 
-USERS_PER_LOAD_BALANCER = 24
+USERS_PER_LOAD_BALANCER = 20
 wordfile = xp.locate_wordfile()
 
 possible_names = sorted(xp.generate_wordlist(wordfile=wordfile, min_length=5, max_length=8))
+
+
+class PersistentUsers:
+    gathered_users: list = []
+
+    @classmethod
+    def to_file(cls):
+        with open('user_passwords.txt', 'r') as f:
+            for i in cls.gathered_users:
+                f.write(i)
+
 
 def generate_user_resources(number_start_user, number_end_user, target_folder):
     users = generate_user_names(number_start_user, number_end_user)
@@ -54,6 +66,7 @@ def render_template(password, user, template_file):
     user_number = int(np.where(np.array(possible_names) == user)[0])
     load_balancer_number = int(user_number / USERS_PER_LOAD_BALANCER)
     template = template_environment.get_template(template_file)
+    PersistentUsers.gathered_users.append((user, password, load_balancer_number)) # pretty dirty I know
     output_text = template.render(
         user_name=user,
         user_number=user_number,
@@ -65,7 +78,4 @@ def render_template(password, user, template_file):
 
 
 if __name__ == '__main__':
-    # number_of_users = int(sys.argv[1])
-    # target_folder = sys.argv[2]
-
     generate_user_resources(number_start_user=0, number_end_user=10, target_folder="terraform/main")
