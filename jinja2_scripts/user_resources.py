@@ -24,9 +24,11 @@ class PersistentUsers:
 
     @classmethod
     def to_file(cls):
-        with open('user_passwords.txt', 'r') as f:
-            for i in cls.gathered_users:
-                f.write(i)
+        with open('user_passwords.txt', 'w') as f:
+            string_users = [[str(j) for j in i] for i in cls.gathered_users]
+            for i in string_users:
+                f.write(', '.join(i))
+                f.write('\n')
 
 
 def generate_user_resources(number_start_user, number_end_user, target_folder):
@@ -66,7 +68,7 @@ def render_template(password, user, template_file):
     user_number = int(np.where(np.array(possible_names) == user)[0])
     load_balancer_number = int(user_number / USERS_PER_LOAD_BALANCER)
     template = template_environment.get_template(template_file)
-    PersistentUsers.gathered_users.append((user, password, load_balancer_number)) # pretty dirty I know
+    PersistentUsers.gathered_users.append([user, password, load_balancer_number]) # pretty dirty I know
     output_text = template.render(
         user_name=user,
         user_number=user_number,
@@ -79,3 +81,5 @@ def render_template(password, user, template_file):
 
 if __name__ == '__main__':
     generate_user_resources(number_start_user=0, number_end_user=10, target_folder="terraform/main")
+
+    PersistentUsers.to_file()

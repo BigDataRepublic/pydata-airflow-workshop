@@ -13,14 +13,4 @@ cd ../../
 docker push $AIRFLOW_IMAGE
 docker push $JUPYTER_IMAGE
 
-# jinja2_scripts
-NUMBER_OF_USERS=$1
-python jinja2_scripts/generate_user_resources.py "$NUMBER_OF_USERS" terraform/main
 
-# terraform
-cd terraform/rds
-terraform init
-terraform apply
-cd ../main
-terraform init
-terraform apply
