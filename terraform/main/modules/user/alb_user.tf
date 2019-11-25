@@ -96,4 +96,6 @@ resource "aws_lb_listener_rule" "jupyter" {
     field = "path-pattern"
     values = ["/${var.user_name}/jupyter"]
   }
+
+
 }
