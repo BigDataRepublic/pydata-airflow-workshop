@@ -31,41 +31,41 @@ output "rds_security_group_id" {
 }
 
 output "ecs_task_execution_role_arn" {
-  value = module.shared.ecs_task_execution_role_arn
-}
-
-output "log_group_name" {
-  value = module.shared.log_group_name
+  value = aws_iam_role.ecs_task_execution_role.arn
 }
 
 output "ecs_security_group_id" {
-  value = module.shared.ecs_security_group_id
+  value = aws_security_group.ecs.id
 }
 
 output "iam_instance_profile_name" {
-  value = module.shared.iam_instance_profile_name
+  value = aws_iam_instance_profile.container_instance.name
 }
 
 output "container_instance_security_group_id" {
-  value = module.shared.container_instance_security_group_id
+  value = aws_security_group.container_instance.id
 }
 
 output "ecs_cluster" {
-  value = module.shared.ecs_cluster
+  value = aws_ecs_cluster.main
+}
+
+output "log_group_name" {
+  value = aws_cloudwatch_log_group.log_group.name
 }
 
 output "aws_alb_main_arns" {
-  value = module.shared.aws_alb_main_arns
-}
-
-output "subnet_ids" {
-  value = module.shared.subnet_ids
-}
-
-output "load_balancer_security_group_id" {
-  value = module.shared.load_balancer_security_group_id
+  value = aws_alb.main.*.arn
 }
 
 output "aws_alb_listener_fixed_response_arns" {
-  value = module.shared.aws_alb_listener_fixed_response_arns
+  value = aws_alb_listener.fixed_response.*.arn
+}
+
+output "load_balancer_security_group_id" {
+  value = aws_security_group.lb.id
+}
+
+output "subnet_ids" {
+  value = aws_subnet.public.*.id
 }

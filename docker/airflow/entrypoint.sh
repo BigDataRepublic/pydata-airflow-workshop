@@ -10,8 +10,6 @@ case "$1" in
       --conn_type S3 \
       --conn_extra "{\"region_name\": \"$AWS_REGION\"}"
 
-    airflow create_user -r Admin -u $WORKSHOP_USER -e air@flow.com -p $WORKSHOP_PASSWORD -f airflow -l airflow
-
     exec airflow webserver
     ;;
   scheduler)

@@ -3,7 +3,7 @@ from shutil import rmtree
 from jinja2_scripts import user_resources
 
 users_per_state = 20
-numer_of_states = 2
+numer_of_states = 5
 print(os.getcwd())
 
 mode = 'apply'  # destroy

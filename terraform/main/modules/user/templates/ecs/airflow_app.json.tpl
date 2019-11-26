@@ -31,10 +31,6 @@
         "value": "${user_name}"
       },
       {
-        "name": "WORKSHOP_PASSWORD",
-        "value": "${password}"
-      },
-      {
         "name": "AWS_REGION",
         "value": "${aws_region}"
       },
