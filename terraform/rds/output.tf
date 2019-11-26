@@ -69,3 +69,7 @@ output "load_balancer_security_group_id" {
 output "subnet_ids" {
   value = aws_subnet.public.*.id
 }
+
+output "load_balancer_dnss" {
+  value = aws_alb.main.*.dns_name
+}

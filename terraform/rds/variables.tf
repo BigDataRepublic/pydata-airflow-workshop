@@ -7,7 +7,7 @@ variable "rds_instance_class" {
 }
 
 variable "number_of_load_balancers" {
-  default = 1
+  default = 5
 }
 
 variable "airflow_port" {

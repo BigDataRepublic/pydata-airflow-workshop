@@ -2,11 +2,11 @@ import os
 from shutil import rmtree
 from jinja2_scripts import user_resources
 
-users_per_state = 20
-numer_of_states = 5
+users_per_state = 10
+numer_of_states = 1
 print(os.getcwd())
 
-mode = 'apply'  # destroy
+mode = 'destroy'  # destroy
 print("total number of users", numer_of_states * users_per_state)
 assert r"terraform/main" in os.getcwd()
 for number in range(numer_of_states):

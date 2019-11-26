@@ -2,6 +2,10 @@
 
 This repo holds all resources for the Airflow workshop for Pydata Eindhoven 2019. 
 
+### WARNING: TECHNICAL DEBT LIES AHEAD
+
+Many workarounds have been put in place to get things up and running quickly for Pydata Eindhoven 2019. If you would like to know more about this repository, please get in touch with dick.abma@bigdatarepublic.nl or axel.goblet@bigdatarepublic.nl
+
 ##Deployment
 The following actions will deploy the entire infrastructure:
 1. go to `terraform/rds`
@@ -11,6 +15,7 @@ The following actions will deploy the entire infrastructure:
 - VPC
 - subnets
 - multiple loadbalancers
+1. In order to retrieve the load balancer DNS names, run `AWS_PROFILE=bdr terraform output -json > output.json`
 1. go to `terraform/main`
 1. open `deploy.py` and inspect
 - the number of users per state. Don't set it to more than 20.

@@ -75,12 +75,4 @@ resource "aws_security_group" "container_instance" {
     cidr_blocks = [
       "0.0.0.0/0"]
   }
-
-  ingress {
-    protocol = "tcp"
-    from_port = 22
-    to_port = 22
-    cidr_blocks = [
-      "0.0.0.0/0"]
-  }
 }
