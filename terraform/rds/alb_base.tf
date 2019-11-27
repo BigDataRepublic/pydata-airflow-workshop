@@ -1,11 +1,10 @@
 resource "aws_alb" "main" {
   count = var.number_of_load_balancers
   name = "pydata-bigdatarepublic-${count.index}"
-  subnets = data.aws_subnet_ids.subnets.ids
+  subnets = aws_subnet.public.*.id
   security_groups = [
     aws_security_group.lb.id]
 }
-
 
 resource "aws_alb_listener" "fixed_response" {
   count = var.number_of_load_balancers

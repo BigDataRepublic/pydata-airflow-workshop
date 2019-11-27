@@ -1,12 +1,12 @@
 # Jinja templating is used because terraform 0.12 does not support for_each yet for modules
 # https://www.hashicorp.com/blog/hashicorp-terraform-0-12-preview-for-and-for-each/
 import jinja2
-import sys
 from xkcdpass import xkcd_password as xp
 import os
 import random
 import string
 import numpy as np
+import json
 
 random.seed(1337)
 
@@ -18,6 +18,10 @@ wordfile = xp.locate_wordfile()
 
 possible_names = sorted(xp.generate_wordlist(wordfile=wordfile, min_length=5, max_length=8))
 
+with open('../rds/output.json', 'r') as f:
+    load_balancer_dns_names = json.load(f)['load_balancer_dnss']['value']
+print(load_balancer_dns_names)
+
 
 class PersistentUsers:
     gathered_users: list = []
@@ -25,10 +29,14 @@ class PersistentUsers:
     @classmethod
     def to_file(cls):
         with open('user_passwords.txt', 'w') as f:
-            string_users = [[str(j) for j in i] for i in cls.gathered_users]
+            string_users = map(
+                lambda x: f'address: {load_balancer_dns_names[x[2]]}\n'
+                          f'username: {x[0]}\n'
+                          f'password: {x[1]}',
+                cls.gathered_users
+            )
             for i in string_users:
-                f.write(', '.join(i))
-                f.write('\n')
+                f.write(i + '\n\n\n')
 
 
 def generate_user_resources(number_start_user, number_end_user, target_folder):

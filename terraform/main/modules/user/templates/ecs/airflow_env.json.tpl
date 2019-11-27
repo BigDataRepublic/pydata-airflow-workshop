@@ -17,8 +17,4 @@
 {
   "name": "AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL",
   "value": "10"
-},
-{
-  "name": "AIRFLOW__WEBSERVER__RBAC",
-  "value": "True"
 }

@@ -75,10 +75,12 @@ lb_endpoints_flat = [(lb, endpoint) for (lb, endpoint_list) in lb_endpoints for 
 
 for kk in range(1000):
     overview = {}
-    for lb, endpoint in lb_endpoints_flat:
-        r = requests.get("http://" + lb.DNSName + endpoint)
-        overview.update({endpoint: r.status_code})
+    while True:
+        for lb, endpoint in lb_endpoints_flat:
+            r = requests.get("http://" + lb.DNSName + endpoint)
+            overview.update({endpoint: r.status_code})
+            print(lb.DNSName, endpoint, r.status_code)
 
-        if r.status_code is not 200:
-            raise Exception(r, lb.DNSName, endpoint)
-    print(pd.DataFrame.from_dict(overview, orient='index'))
+            if r.status_code is not 200:
+                raise Exception(r, lb.DNSName, endpoint)
+        print(pd.DataFrame.from_dict(overview, orient='index').describe())
