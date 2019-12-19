@@ -3,7 +3,7 @@ variable "aws_region" {
 }
 
 variable "rds_instance_class" {
-  default =  "db.t3.2xlarge"
+  default = var.rds_instance
 }
 
 variable "number_of_load_balancers" {
@@ -16,4 +16,8 @@ variable "airflow_port" {
 
 variable "jupyter_port" {
   default = 8888
+}
+
+variable aws_user {
+
 }

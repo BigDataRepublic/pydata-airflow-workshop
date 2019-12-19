@@ -22,3 +22,6 @@ variable "aws_region" {
 variable "number_of_load_balancers" {
   default = 1
 }
+
+variable aws_user {
+}

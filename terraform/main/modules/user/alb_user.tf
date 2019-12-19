@@ -81,6 +81,7 @@ resource "aws_lb_listener_rule" "jupyter" {
   listener_arn = var.aws_alb_listener_fixed_response_arn
   priority = aws_alb_listener.jupyter.port
 
+
   action {
     type = "redirect"
     redirect {

@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "workshop" {
-  bucket = "pydata-eindhoven-2019-airflow-${var.user_name}"
+  bucket = "${var.aws_user}-pydata-eindhoven-2019-airflow-${var.user_name}"
   force_destroy = true
   acl = "private"
 }
