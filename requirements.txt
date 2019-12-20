@@ -1,0 +1,6 @@
+xkcdpass==1.17.3
+ruamel-yaml==0.15.46
+boto3==1.10.27
+jinja2-time==0.2.0
+pandas==0.24.2
+requests==2.22.0

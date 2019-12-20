@@ -4,8 +4,13 @@ This repo holds all resources for the Airflow workshop for Pydata Eindhoven 2019
 
 If you would like to know more about this repository, please get in touch with us. 
 
+## Requirements
+- Python3.7  
+- Terraform 0.12.16
+
 ## Deployment
 The following actions will deploy the entire infrastructure:
+1. Install requirements in requirements.txt
 1. Run the bootstrap to setup the remote state:   
     a. `cd terraform/bootstrap`  
     b. `AWS_DEFAULT_REGION=<your region> AWS_PROFILE=<your profile> terraform init && terraform apply`     
