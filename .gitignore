@@ -16,6 +16,8 @@
 
 terraform/*/generated*.tf
 .mypy_cache
-jinja2_scripts/__pycache__
-user_passwords.txt
+jinja2_templates/__pycache__
 terraform/rds/output.json
+*.tf-bak
+output.json
+__pycache__

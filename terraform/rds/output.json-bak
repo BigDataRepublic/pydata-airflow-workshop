@@ -1,0 +1,183 @@
+{
+  "aws_alb_listener_fixed_response_arns": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string",
+        "string",
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "arn:aws:elasticloadbalancing:eu-west-1:872230860727:listener/app/pydata-bigdatarepublic-0/c4e1491cd3d82a73/0853144685ebcad1",
+      "arn:aws:elasticloadbalancing:eu-west-1:872230860727:listener/app/pydata-bigdatarepublic-1/a7f86162c726e0a7/9fbbec65d0c98ef6",
+      "arn:aws:elasticloadbalancing:eu-west-1:872230860727:listener/app/pydata-bigdatarepublic-2/00dbb57ac1acd834/1fa2caf24e2eaeed",
+      "arn:aws:elasticloadbalancing:eu-west-1:872230860727:listener/app/pydata-bigdatarepublic-3/eec2ffbca17dce82/dd7a30e294750a91",
+      "arn:aws:elasticloadbalancing:eu-west-1:872230860727:listener/app/pydata-bigdatarepublic-4/85b171942f006564/7a4decd184989f4b"
+    ]
+  },
+  "aws_alb_main_arns": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string",
+        "string",
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "arn:aws:elasticloadbalancing:eu-west-1:872230860727:loadbalancer/app/pydata-bigdatarepublic-0/c4e1491cd3d82a73",
+      "arn:aws:elasticloadbalancing:eu-west-1:872230860727:loadbalancer/app/pydata-bigdatarepublic-1/a7f86162c726e0a7",
+      "arn:aws:elasticloadbalancing:eu-west-1:872230860727:loadbalancer/app/pydata-bigdatarepublic-2/00dbb57ac1acd834",
+      "arn:aws:elasticloadbalancing:eu-west-1:872230860727:loadbalancer/app/pydata-bigdatarepublic-3/eec2ffbca17dce82",
+      "arn:aws:elasticloadbalancing:eu-west-1:872230860727:loadbalancer/app/pydata-bigdatarepublic-4/85b171942f006564"
+    ]
+  },
+  "aws_region": {
+    "sensitive": false,
+    "type": "string",
+    "value": "eu-west-1"
+  },
+  "container_instance_security_group_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "sg-0a3368a3f4fd876ac"
+  },
+  "ecs_cluster": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "arn": "string",
+        "id": "string",
+        "name": "string",
+        "setting": [
+          "set",
+          [
+            "object",
+            {
+              "name": "string",
+              "value": "string"
+            }
+          ]
+        ],
+        "tags": [
+          "map",
+          "string"
+        ]
+      }
+    ],
+    "value": {
+      "arn": "arn:aws:ecs:eu-west-1:872230860727:cluster/pydata",
+      "id": "arn:aws:ecs:eu-west-1:872230860727:cluster/pydata",
+      "name": "pydata",
+      "setting": [
+        {
+          "name": "containerInsights",
+          "value": "disabled"
+        }
+      ],
+      "tags": null
+    }
+  },
+  "ecs_security_group_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "sg-0063d2ba7919d78d6"
+  },
+  "ecs_task_execution_role_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:iam::872230860727:role/pydataECS"
+  },
+  "iam_instance_profile_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "pydata_container_instance"
+  },
+  "load_balancer_dnss": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string",
+        "string",
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "pydata-bigdatarepublic-0-334117269.eu-west-1.elb.amazonaws.com",
+      "pydata-bigdatarepublic-1-1137637948.eu-west-1.elb.amazonaws.com",
+      "pydata-bigdatarepublic-2-517244429.eu-west-1.elb.amazonaws.com",
+      "pydata-bigdatarepublic-3-939955917.eu-west-1.elb.amazonaws.com",
+      "pydata-bigdatarepublic-4-1082326091.eu-west-1.elb.amazonaws.com"
+    ]
+  },
+  "load_balancer_security_group_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "sg-0153d7e00a4326590"
+  },
+  "log_group_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "/ecs/pydata"
+  },
+  "rds_database": {
+    "sensitive": false,
+    "type": "string",
+    "value": "airflow"
+  },
+  "rds_host": {
+    "sensitive": false,
+    "type": "string",
+    "value": "terraform-20191128150642715500000003.cpb4nm7jduse.eu-west-1.rds.amazonaws.com"
+  },
+  "rds_password": {
+    "sensitive": false,
+    "type": "string",
+    "value": "airflow1234"
+  },
+  "rds_port": {
+    "sensitive": false,
+    "type": "number",
+    "value": 5432
+  },
+  "rds_security_group_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "sg-077c0bf9bc2caf387"
+  },
+  "rds_username": {
+    "sensitive": false,
+    "type": "string",
+    "value": "airflow"
+  },
+  "subnet_ids": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "subnet-0f4d0f4d19ade34f7",
+      "subnet-087f62720b09e1c25"
+    ]
+  },
+  "vpc_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "vpc-0e208c660c6ec70cf"
+  }
+}

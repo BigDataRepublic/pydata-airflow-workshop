@@ -1,6 +1,6 @@
 module "{{user_name}}" {
   source = "./modules/user"
-  
+  aws_user = "{{aws_user}}"
   user_name = "{{user_name}}"
   password = "{{password}}"
   airflow_port = var.airflow_port

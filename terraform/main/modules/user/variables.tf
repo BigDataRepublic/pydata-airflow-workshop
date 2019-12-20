@@ -39,3 +39,5 @@ variable "aws_alb_listener_fixed_response_arn" {}
 variable "rds_host" {}
 
 variable "rds_port" {}
+
+variable aws_user {}

@@ -1,0 +1,4 @@
+number_of_users: 2  # the number of participants in the workshop
+aws_profile: bdr # profile name. Also used to create unique s3bucket names.
+rds_instance_class: db.t3.medium
+aws_region: eu-west-1
