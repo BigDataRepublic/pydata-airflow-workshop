@@ -14,6 +14,7 @@ class Input:
     rds_instance_class: str
     aws_region: str
 
+
 def get_input() -> Input:
     return Input(**yaml.load(open("config.yaml"), Loader=yaml.FullLoader))
 
@@ -31,8 +32,7 @@ if __name__ == "__main__":
     users_per_state = 10
     number_of_states = int(number_of_users / users_per_state) + 1
     number_of_loadbalancers = int(number_of_users / USERS_PER_LOAD_BALANCER) + 1
-    mode = Mode.apply
-
+    mode = Mode.destroy
 
     print("Total number of users:", number_of_users)
     print("total number of states", number_of_states)
@@ -61,7 +61,7 @@ if __name__ == "__main__":
         try:
             os.remove('terraform/main/.terraform/terraform.tfstate')  # remove only local copy
         except FileNotFoundError as e:
-            print(e)  # it's OK to continue. We need to be sure thast the local state is not there.
+            print(e)  # it's OK to continue. We just need to be sure that the local state is not there.
         next_ceiling = (number + 1) * users_per_state
         next_max = next_ceiling if next_ceiling <= number_of_users else number_of_users
         user_module_calls.generate_user_resources(number_start_user=number * users_per_state,
@@ -85,5 +85,10 @@ if __name__ == "__main__":
 
     if mode == Mode.destroy:
         "Destroy the VPC and shared RDS."
+        try:
+            os.remove(f'output.json')
+        except FileNotFoundError as e:
+            print(e)
+        os.chdir("terraform/main")
+        assert r"terraform/main" in os.getcwd()
         os.system(f'{env_profile} terraform destroy -auto-approve -parallelism=100 {var_region}  {var_lbs}')
-        os.remove(f'output.json')

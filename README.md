@@ -4,7 +4,7 @@ This repo holds all resources for the Airflow workshop for Pydata Eindhoven 2019
 
 If you would like to know more about this repository, please get in touch with us. 
 
-##Deployment
+## Deployment
 The following actions will deploy the entire infrastructure:
 1. Run the bootstrap to setup the remote state:   
     a. `cd terraform/bootstrap`  
