@@ -15,13 +15,8 @@ data "terraform_remote_state" "rds" {
   }
 }
 
-variable "aws_region" {
-  default = "eu-west-1"
-}
+variable "aws_region" {}
 
-variable "number_of_load_balancers" {
-  default = 1
-}
+variable "number_of_load_balancers" {}
 
-variable aws_user {
-}
+variable aws_user {}

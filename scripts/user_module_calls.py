@@ -25,22 +25,23 @@ USER_FILE = 'generated_user.tf'
 USERS_PER_LOAD_BALANCER = 20
 
 
-def generate_user_resources(number_start_user, number_end_user, target_folder):
+def generate_user_resources(number_start_user: int, number_end_user: int, aws_user: str, target_folder: str):
     user_file_content = render_templates(
         user_password_list[number_start_user: number_end_user],  # TODO check
-        USER_FILE + '.j2'
+        aws_user,
+        'jinja2_templates/' + USER_FILE + '.j2'
     )
     with open(f'{target_folder}/{USER_FILE}', 'w') as f:
         f.write(user_file_content)
 
 
-def render_templates(users_passwords: List[UserPassword], template_file):
+def render_templates(users_passwords: List[UserPassword], aws_user: str, template_file):
     return ('\r\n' * 2).join([
-        render_template(up=up, template_file=template_file) for up in users_passwords])
+        render_template(up=up, aws_user=aws_user, template_file=template_file) for up in users_passwords])
 
 
-def render_template(up: UserPassword, template_file):
-    template_folder = os.path.dirname(os.path.realpath(__file__))
+def render_template(up: UserPassword, aws_user: str, template_file):
+    template_folder = os.path.dirname('jinja2_templates')
     template_loader = jinja2.FileSystemLoader(searchpath=template_folder)
     template_environment = jinja2.Environment(loader=template_loader)
     load_balancer_number = int(up.number / USERS_PER_LOAD_BALANCER)
@@ -51,6 +52,7 @@ def render_template(up: UserPassword, template_file):
         user_number=up.number,
         password=up.password,
         load_balancer_number=load_balancer_number,
+        aws_user=aws_user
     )
 
     return output_text

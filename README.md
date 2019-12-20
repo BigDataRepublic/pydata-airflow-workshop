@@ -16,3 +16,4 @@ The following actions will deploy the entire infrastructure:
 1. Set the desired RDS instance type in `config.yaml`
 1. Run `python deploy.py`
 1. Keep an eye on the process to spot any errors
+1. Find the users names, passwords and endpoints in `user_credentials.txt`

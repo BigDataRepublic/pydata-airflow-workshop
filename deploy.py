@@ -1,9 +1,10 @@
 import os
-import sys
 from scripts import user_module_calls
 from enum import Enum
 from dataclasses import dataclass
 import yaml
+from scripts.user_module_calls import USERS_PER_LOAD_BALANCER
+from scripts.user_endpoints import create_password_file_content
 
 
 @dataclass
@@ -11,10 +12,10 @@ class Input:
     number_of_users: int
     aws_profile: str
     rds_instance_class: str
-
+    aws_region: str
 
 def get_input() -> Input:
-    return Input(**yaml.load(open("config.yaml")))
+    return Input(**yaml.load(open("config.yaml"), Loader=yaml.FullLoader))
 
 
 class Mode(Enum):
@@ -28,37 +29,61 @@ if __name__ == "__main__":
 
     number_of_users = input.number_of_users
     users_per_state = 10
-    number_of_states = int(number_of_users / users_per_state)
-    print(number_of_users)
-
+    number_of_states = int(number_of_users / users_per_state) + 1
+    number_of_loadbalancers = int(number_of_users / USERS_PER_LOAD_BALANCER) + 1
     mode = Mode.apply
-    print("total number of users", number_of_states * users_per_state)
 
-    append_input = f'-var="rds_instance_class={input.rds_instance_class}" -var="aws_user={input.aws_profile}"'
-    aws_var = f'-var="aws_user={input.aws_profile}"'
-    aws_profile = f'AWS_PROFILE={input.aws_profile}'
+
+    print("Total number of users:", number_of_users)
+    print("total number of states", number_of_states)
+
+    # Prepair some cli variables for reuse.
+    var_lbs = f'-var="number_of_load_balancers={number_of_loadbalancers}"'
+    var_rds = f'-var="rds_instance_class={input.rds_instance_class}" ' \
+              f'-var="aws_user={input.aws_profile}" '
+    var_region = f'-var="aws_user={input.aws_profile}" ' \
+                 f'-var="aws_region={input.aws_region}"'
+    env_profile = f'AWS_PROFILE={input.aws_profile}'
+
     if mode == Mode.apply:
+        "Setup VPC and shared RDS."
         os.chdir("terraform/rds")
-        os.system(f'{aws_profile} terraform apply -auto-approve -parallelism=100 {append_input}')
-        os.system(f'{aws_profile} terraform output  {append_input} -json > ../../output.json ')
+        code = os.system(
+            f'{env_profile} terraform apply -auto-approve -parallelism=100 {var_rds} {var_region} {var_lbs}')
+        assert code == 0
+        code = os.system(f'{env_profile} terraform output -json > ../../output.json ')
+        assert code == 0
         os.chdir("../..")
 
-    os.chdir("terraform/main")
-    assert r"terraform/main" in os.getcwd()
     for number in range(number_of_states):
-        print(number)
+        "Deploy the user environments."
+        print("Deploying for state", number)
         try:
-            os.remove('terraform/.terraform/terraform.tfstate')  # remove only local copy
+            os.remove('terraform/main/.terraform/terraform.tfstate')  # remove only local copy
         except FileNotFoundError as e:
-            print(e)
+            print(e)  # it's OK to continue. We need to be sure thast the local state is not there.
+        next_ceiling = (number + 1) * users_per_state
+        next_max = next_ceiling if next_ceiling <= number_of_users else number_of_users
         user_module_calls.generate_user_resources(number_start_user=number * users_per_state,
-                                                  number_end_user=(number + 1) * users_per_state,
-                                                  target_folder=os.getcwd())
-        print(number)
-        os.system(
-            f'{aws_profile} terraform init -backend-config="key=main-state-{number}" {aws_var}')
-        os.system(f'{aws_profile} terraform {mode.name} -auto-approve -parallelism=100 {aws_var}')
+                                                  number_end_user=next_max,
+                                                  target_folder="terraform/main",
+                                                  aws_user=input.aws_profile)
+        # generate generated_user.tf
+        os.chdir("terraform/main")
+        assert r"terraform/main" in os.getcwd()
+
+        code = os.system(
+            f'{env_profile} terraform init -backend-config="key=main-state-{number}" {var_region}')
+        assert code == 0
+
+        code = os.system(
+            f'{env_profile} terraform {mode.name} -auto-approve -parallelism=100 {var_region} {var_lbs}')
+        assert code == 0
+        os.chdir("../..")
+    if mode == Mode.apply:
+        create_password_file_content(number_of_users=number_of_users)
 
     if mode == Mode.destroy:
-        os.system(f'{aws_profile} terraform destroy -auto-approve -parallelism=100 {aws_var}')
+        "Destroy the VPC and shared RDS."
+        os.system(f'{env_profile} terraform destroy -auto-approve -parallelism=100 {var_region}  {var_lbs}')
         os.remove(f'output.json')
