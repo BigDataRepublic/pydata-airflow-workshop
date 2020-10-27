@@ -25,7 +25,7 @@ conda==4.7.10
 conda-package-handling==1.4.0
 configparser==3.5.3
 croniter==0.3.30
-cryptography==2.7
+cryptography==3.2
 cycler==0.10.0
 Cython==0.29.13
 cytoolz==0.10.0
