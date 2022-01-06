@@ -10,7 +10,7 @@ billiard==3.6.0.0
 boto3==1.10.10
 botocore==1.13.10
 cached-property==1.5.1
-celery==4.3.0
+celery==5.2.2
 certifi==2019.6.16
 cffi==1.12.3
 chardet==3.0.4
