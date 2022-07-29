@@ -89,7 +89,7 @@ marshmallow==2.19.5
 marshmallow-enum==1.5.1
 marshmallow-sqlalchemy==0.19.0
 matplotlib==3.1.1
-mistune==0.8.4
+mistune==2.0.3
 mpmath==1.1.0
 msgpack==0.6.1
 nbconvert==5.6.0
