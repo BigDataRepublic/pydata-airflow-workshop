@@ -92,7 +92,7 @@ matplotlib==3.1.1
 mistune==0.8.4
 mpmath==1.1.0
 msgpack==0.6.1
-nbconvert==5.6.0
+nbconvert==6.5.1
 nbformat==4.4.0
 networkx==2.3
 notebook==6.0.0
